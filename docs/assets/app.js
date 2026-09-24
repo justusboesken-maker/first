@@ -5,7 +5,14 @@ const REFRESH_MS = 15 * 60 * 1000;
 const NEW_SIGNAL_DAYS = 10;
 const STALE_DAYS = 3;
 const HISTORY_ROWS = 10;
-const STORE = { notify: 'marktsignale:notify', seen: 'marktsignale:seen' };
+const STORE = { notify: 'marktsignale:notify', seen: 'marktsignale:seen', range: 'marktsignale:range' };
+const RANGES = [
+  { id: '1m', label: '1 Monat', days: 31, daily: true },
+  { id: '1y', label: '1 Jahr', days: 366 },
+  { id: '3y', label: '3 Jahre', days: 3 * 365 + 1 },
+  { id: '10y', label: '10 Jahre', days: 10 * 365 + 3 },
+  { id: 'max', label: 'Max.', days: Infinity },
+];
 
 const $ = (selector) => document.querySelector(selector);
 
@@ -40,6 +47,7 @@ const ICON = {
 let data = null;
 let lastLoad = 0;
 let showAllHistory = false;
+let range = RANGES.find((r) => r.id === store.get(STORE.range)) || RANGES[2];
 const chartAssets = new Map();
 const resizeObserver = 'ResizeObserver' in window
   ? new ResizeObserver((entries) => entries.forEach((e) => requestAnimationFrame(() => drawChart(e.target))))
@@ -163,7 +171,7 @@ function cardHtml(asset) {
 
   return `
     <article class="card" id="asset-${esc(asset.id)}">
-      <div class="info">
+      <div class="card-top">
         ${callouts.length ? `<div class="callout-stack">${callouts.join('')}</div>` : ''}
         <h2>${esc(asset.name)}</h2>
         <p class="instrument">${esc(asset.symbol)} · ${esc(asset.instrument)}</p>
@@ -178,12 +186,10 @@ function cardHtml(asset) {
             ${delta(week.distance_pct, ' zum MA')}
           </div>
         </div>
-        <dl class="facts">${facts.join('')}</dl>
-        <p class="rule"><strong>Kauf:</strong> ${esc(asset.rule.buy)}<br><strong>Verkauf:</strong> ${esc(asset.rule.sell)}</p>
       </div>
       <div class="chart-col">
         <div class="chart-head">
-          <span class="chart-title">Wochenschlüsse · letzte 3 Jahre</span>
+          <span class="chart-title"></span>
           <div class="legend">
             <span><i class="key-line price"></i>Kurs</span>
             <span><i class="key-line ma"></i>50W-MA</span>
@@ -193,9 +199,58 @@ function cardHtml(asset) {
           </div>
         </div>
         <div class="chart" data-asset="${esc(asset.id)}" role="img"
-             aria-label="${esc(`${asset.name}: Wochenschlusskurse und 50-Wochen-MA der letzten drei Jahre, Phasen mit Investition hervorgehoben`)}"></div>
+             aria-label="${esc(`${asset.name}: Schlusskurse und 50-Wochen-MA, Phasen mit Investition hervorgehoben`)}"></div>
+      </div>
+      <div class="card-bottom">
+        <dl class="facts">${facts.join('')}</dl>
+        <p class="rule"><strong>Kauf:</strong> ${esc(asset.rule.buy)}<br><strong>Verkauf:</strong> ${esc(asset.rule.sell)}</p>
       </div>
     </article>`;
+}
+
+function renderRange() {
+  $('#range').innerHTML = RANGES.map((r) => `
+    <button type="button" data-range="${r.id}" aria-pressed="${r.id === range.id}">${r.label}</button>`).join('');
+}
+
+function setRange(id) {
+  range = RANGES.find((r) => r.id === id) || range;
+  store.set(STORE.range, range.id);
+  renderRange();
+  chartAssets.forEach((_, el) => drawChart(el));
+}
+
+/** Datenpunkte für den gewählten Zeitraum: Tageskurse für 1 Monat, sonst Wochenschlüsse. */
+function chartRows(asset) {
+  const daily = range.daily && asset.daily?.length > 1;
+  const all = daily ? asset.daily : asset.chart.filter((r) => r.ma !== null);
+  if (!all.length || range.days === Infinity) return { rows: all, daily, full: true };
+  const end = parseDay(all[all.length - 1].date);
+  const cutoff = new Date(end.getFullYear(), end.getMonth(), end.getDate() - range.days);
+  const rows = all.filter((r) => parseDay(r.date) >= cutoff);
+  return { rows, daily, full: rows.length === all.length && !daily };
+}
+
+const monthFormat = new Intl.DateTimeFormat('de-DE', { month: 'short' });
+const shortDayFormat = new Intl.DateTimeFormat('de-DE', { day: '2-digit', month: '2-digit' });
+
+/** Beschriftungen der Zeitachse passend zur Spanne: Jahre, Monate oder Tage. */
+function timeTicks(rows) {
+  const spanDays = (parseDay(rows[rows.length - 1].date) - parseDay(rows[0].date)) / 86400000;
+  const unit = spanDays > 700 ? 'year' : spanDays > 70 ? 'month' : 'week';
+  const key = (d) => (unit === 'year' ? d.getFullYear()
+    : unit === 'month' ? d.getFullYear() * 12 + d.getMonth()
+      : Math.floor((d - new Date(1970, 0, 5)) / (7 * 86400000)));
+  const ticks = [];
+  for (let i = 1; i < rows.length; i++) {
+    const d = parseDay(rows[i].date);
+    if (key(d) === key(parseDay(rows[i - 1].date))) continue;
+    const label = unit === 'year' ? String(d.getFullYear())
+      : unit === 'month' ? (d.getMonth() === 0 ? String(d.getFullYear()) : monthFormat.format(d).replace('.', ''))
+        : shortDayFormat.format(d);
+    ticks.push({ i, label });
+  }
+  return ticks;
 }
 
 function renderAssets() {
@@ -245,7 +300,12 @@ const SVG_NS = 'http://www.w3.org/2000/svg';
 function drawChart(el) {
   const asset = chartAssets.get(el);
   if (!asset) return;
-  const rows = asset.chart.filter((r) => r.ma !== null);
+  const { rows, daily, full } = chartRows(asset);
+  const title = el.closest('.card')?.querySelector('.chart-title');
+  if (title) {
+    const since = rows.length ? parseDay(rows[0].date).getFullYear() : '';
+    title.textContent = `${daily ? 'Tagesschlüsse' : 'Wochenschlüsse'} · ${full && range.days !== Infinity ? `seit ${since} (gesamte Historie)` : range.id === 'max' ? `seit ${since}` : range.label}`;
+  }
   const width = el.clientWidth;
   const height = el.clientHeight;
   if (rows.length < 2 || width < 50) return;
@@ -281,14 +341,14 @@ function drawChart(el) {
   ticks.forEach((t) => parts.push(`<line x1="${pad.left}" x2="${pad.left + plotW}" y1="${y(t).toFixed(1)}" y2="${y(t).toFixed(1)}"/>`));
   parts.push('</g>');
   ticks.forEach((t) => parts.push(`<text class="tick" x="${pad.left + plotW + 8}" y="${y(t).toFixed(1)}" dy="0.35em">${fmt[digits].format(t)}</text>`));
-  for (let i = 1; i < n; i++) {
-    if (rows[i].date.slice(0, 4) === rows[i - 1].date.slice(0, 4)) continue;
+  let lastLabelX = -Infinity;
+  timeTicks(rows).forEach(({ i, label }) => {
     const xi = x(i);
+    if (xi - lastLabelX < label.length * 6.5 + 14 || xi > pad.left + plotW - 24) return;
+    lastLabelX = xi;
     parts.push(`<line class="cursor" x1="${xi.toFixed(1)}" x2="${xi.toFixed(1)}" y1="${pad.top + plotH}" y2="${pad.top + plotH + 5}"/>`);
-    if (xi < pad.left + plotW - 24) {
-      parts.push(`<text class="tick" x="${(xi + 4).toFixed(1)}" y="${pad.top + plotH + 17}">${rows[i].date.slice(0, 4)}</text>`);
-    }
-  }
+    parts.push(`<text class="tick" x="${(xi + 4).toFixed(1)}" y="${pad.top + plotH + 17}">${label}</text>`);
+  });
   // Linien
   const line = (key) => rows.map((r, i) => `${i ? 'L' : 'M'}${x(i).toFixed(1)},${y(r[key]).toFixed(1)}`).join('');
   parts.push(`<path class="line ma" d="${line('ma')}"/>`);
@@ -336,7 +396,7 @@ function drawChart(el) {
 
     const signal = signalsByDate.get(r.date);
     tooltip.innerHTML = `
-      <div class="tt-date">Wochenschluss ${fmtDay(r.date)}</div>
+      <div class="tt-date">${daily ? 'Tagesschluss' : 'Wochenschluss'} ${fmtDay(r.date)}</div>
       <div class="tt-row"><span><i class="tt-key" style="background:var(--price)"></i>Kurs</span><b>${usd(r.close)}</b></div>
       <div class="tt-row"><span><i class="tt-key" style="background:var(--ma)"></i>50W-MA</span><b>${usd(r.ma)}</b></div>
       <div class="tt-row"><span>Abstand</span><b>${pct((r.close / r.ma - 1) * 100)}</b></div>
@@ -422,6 +482,11 @@ function checkForNewSignals() {
 /* Start ------------------------------------------------------------------ */
 
 $('#notify-btn').addEventListener('click', toggleNotifications);
+$('#range').addEventListener('click', (event) => {
+  const button = event.target.closest('button[data-range]');
+  if (button) setRange(button.dataset.range);
+});
+renderRange();
 $('#history-toggle').addEventListener('click', () => { showAllHistory = !showAllHistory; renderHistory(); });
 document.addEventListener('visibilitychange', () => {
   if (document.visibilityState === 'visible' && Date.now() - lastLoad > 5 * 60 * 1000) load();

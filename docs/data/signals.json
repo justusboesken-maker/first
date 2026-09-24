@@ -1,0 +1,3038 @@
+{
+ "generated_at": "2026-09-24T03:19:28Z",
+ "ma_weeks": 50,
+ "assets": [
+  {
+   "id": "ftse",
+   "name": "FTSE All-World TR",
+   "symbol": "FTSE:AW01.TR",
+   "instrument": "FTSE All-World Index, Total Return in US-Dollar",
+   "rule": {
+    "confirm_weeks": 2,
+    "band_pct": 0.0,
+    "buy": "2 Wochenschlüsse in Folge über dem 50-Wochen-MA",
+    "sell": "2 Wochenschlüsse in Folge unter dem 50-Wochen-MA"
+   },
+   "status": "invested",
+   "last_week": {
+    "date": "2026-09-18",
+    "close": 1370.92,
+    "ma": 1270.3366,
+    "distance_pct": 7.92
+   },
+   "last_signal": {
+    "id": "ftse-2025-05-02-buy",
+    "date": "2025-05-02",
+    "type": "buy",
+    "close": 1000.11,
+    "ma": 970.5452,
+    "distance_pct": 3.05
+   },
+   "change_since_signal_pct": 37.08,
+   "trigger": {
+    "type": "sell",
+    "level": 1270.3366,
+    "streak": 0,
+    "needed": 2
+   },
+   "live": {
+    "date": "2026-09-24",
+    "close": 1379.56,
+    "ma": 1274.837,
+    "distance_pct": 8.21,
+    "streak": 0,
+    "would_signal": null
+   },
+   "signals": [
+    {
+     "id": "ftse-2025-05-02-buy",
+     "date": "2025-05-02",
+     "type": "buy",
+     "close": 1000.11,
+     "ma": 970.5452,
+     "distance_pct": 3.05
+    }
+   ],
+   "chart": [
+    {
+     "date": "2024-05-17",
+     "close": 918.16,
+     "ma": null,
+     "invested": false
+    },
+    {
+     "date": "2024-05-24",
+     "close": 914.48,
+     "ma": null,
+     "invested": false
+    },
+    {
+     "date": "2024-05-31",
+     "close": 908.24,
+     "ma": null,
+     "invested": false
+    },
+    {
+     "date": "2024-06-07",
+     "close": 918.42,
+     "ma": null,
+     "invested": false
+    },
+    {
+     "date": "2024-06-14",
+     "close": 921.87,
+     "ma": null,
+     "invested": false
+    },
+    {
+     "date": "2024-06-21",
+     "close": 926.46,
+     "ma": null,
+     "invested": false
+    },
+    {
+     "date": "2024-06-28",
+     "close": 927.87,
+     "ma": null,
+     "invested": false
+    },
+    {
+     "date": "2024-07-05",
+     "close": 946.34,
+     "ma": null,
+     "invested": false
+    },
+    {
+     "date": "2024-07-12",
+     "close": 959.47,
+     "ma": null,
+     "invested": false
+    },
+    {
+     "date": "2024-07-19",
+     "close": 939.72,
+     "ma": null,
+     "invested": false
+    },
+    {
+     "date": "2024-07-26",
+     "close": 931.43,
+     "ma": null,
+     "invested": false
+    },
+    {
+     "date": "2024-08-02",
+     "close": 913.58,
+     "ma": null,
+     "invested": false
+    },
+    {
+     "date": "2024-08-09",
+     "close": 913.7,
+     "ma": null,
+     "invested": false
+    },
+    {
+     "date": "2024-08-16",
+     "close": 948.92,
+     "ma": null,
+     "invested": false
+    },
+    {
+     "date": "2024-08-23",
+     "close": 965.3,
+     "ma": null,
+     "invested": false
+    },
+    {
+     "date": "2024-08-30",
+     "close": 968.8,
+     "ma": null,
+     "invested": false
+    },
+    {
+     "date": "2024-09-06",
+     "close": 934.17,
+     "ma": null,
+     "invested": false
+    },
+    {
+     "date": "2024-09-13",
+     "close": 961.25,
+     "ma": null,
+     "invested": false
+    },
+    {
+     "date": "2024-09-20",
+     "close": 973.84,
+     "ma": null,
+     "invested": false
+    },
+    {
+     "date": "2024-09-27",
+     "close": 993.2,
+     "ma": null,
+     "invested": false
+    },
+    {
+     "date": "2024-10-04",
+     "close": 986.63,
+     "ma": null,
+     "invested": false
+    },
+    {
+     "date": "2024-10-11",
+     "close": 992.41,
+     "ma": null,
+     "invested": false
+    },
+    {
+     "date": "2024-10-18",
+     "close": 996.85,
+     "ma": null,
+     "invested": false
+    },
+    {
+     "date": "2024-10-25",
+     "close": 983.49,
+     "ma": null,
+     "invested": false
+    },
+    {
+     "date": "2024-11-01",
+     "close": 972.06,
+     "ma": null,
+     "invested": false
+    },
+    {
+     "date": "2024-11-08",
+     "close": 1004.21,
+     "ma": null,
+     "invested": false
+    },
+    {
+     "date": "2024-11-15",
+     "close": 980.82,
+     "ma": null,
+     "invested": false
+    },
+    {
+     "date": "2024-11-22",
+     "close": 993.81,
+     "ma": null,
+     "invested": false
+    },
+    {
+     "date": "2024-11-29",
+     "close": 1004.24,
+     "ma": null,
+     "invested": false
+    },
+    {
+     "date": "2024-12-06",
+     "close": 1017.64,
+     "ma": null,
+     "invested": false
+    },
+    {
+     "date": "2024-12-13",
+     "close": 1009.13,
+     "ma": null,
+     "invested": false
+    },
+    {
+     "date": "2024-12-20",
+     "close": 983.78,
+     "ma": null,
+     "invested": false
+    },
+    {
+     "date": "2024-12-27",
+     "close": 992.92,
+     "ma": null,
+     "invested": false
+    },
+    {
+     "date": "2025-01-03",
+     "close": 987.98,
+     "ma": null,
+     "invested": false
+    },
+    {
+     "date": "2025-01-10",
+     "close": 972.52,
+     "ma": null,
+     "invested": false
+    },
+    {
+     "date": "2025-01-17",
+     "close": 997.28,
+     "ma": null,
+     "invested": false
+    },
+    {
+     "date": "2025-01-24",
+     "close": 1018.01,
+     "ma": null,
+     "invested": false
+    },
+    {
+     "date": "2025-01-31",
+     "close": 1014.05,
+     "ma": null,
+     "invested": false
+    },
+    {
+     "date": "2025-02-07",
+     "close": 1014.72,
+     "ma": null,
+     "invested": false
+    },
+    {
+     "date": "2025-02-14",
+     "close": 1031.92,
+     "ma": null,
+     "invested": false
+    },
+    {
+     "date": "2025-02-21",
+     "close": 1021.83,
+     "ma": null,
+     "invested": false
+    },
+    {
+     "date": "2025-02-28",
+     "close": 1008.38,
+     "ma": null,
+     "invested": false
+    },
+    {
+     "date": "2025-03-07",
+     "close": 997.89,
+     "ma": null,
+     "invested": false
+    },
+    {
+     "date": "2025-03-14",
+     "close": 980.59,
+     "ma": null,
+     "invested": false
+    },
+    {
+     "date": "2025-03-21",
+     "close": 987.88,
+     "ma": null,
+     "invested": false
+    },
+    {
+     "date": "2025-03-28",
+     "close": 974.94,
+     "ma": null,
+     "invested": false
+    },
+    {
+     "date": "2025-04-04",
+     "close": 899.48,
+     "ma": null,
+     "invested": false
+    },
+    {
+     "date": "2025-04-11",
+     "close": 929.69,
+     "ma": null,
+     "invested": false
+    },
+    {
+     "date": "2025-04-18",
+     "close": 934.05,
+     "ma": null,
+     "invested": false
+    },
+    {
+     "date": "2025-04-25",
+     "close": 970.89,
+     "ma": 968.9062,
+     "invested": false
+    },
+    {
+     "date": "2025-05-02",
+     "close": 1000.11,
+     "ma": 970.5452,
+     "invested": true
+    },
+    {
+     "date": "2025-05-09",
+     "close": 998.21,
+     "ma": 972.2198,
+     "invested": true
+    },
+    {
+     "date": "2025-05-16",
+     "close": 1037.65,
+     "ma": 974.808,
+     "invested": true
+    },
+    {
+     "date": "2025-05-23",
+     "close": 1024.46,
+     "ma": 976.9288,
+     "invested": true
+    },
+    {
+     "date": "2025-05-30",
+     "close": 1038.2,
+     "ma": 979.2554,
+     "invested": true
+    },
+    {
+     "date": "2025-06-06",
+     "close": 1052.97,
+     "ma": 981.7856,
+     "invested": true
+    },
+    {
+     "date": "2025-06-13",
+     "close": 1050.92,
+     "ma": 984.2466,
+     "invested": true
+    },
+    {
+     "date": "2025-06-20",
+     "close": 1046.3,
+     "ma": 986.2458,
+     "invested": true
+    },
+    {
+     "date": "2025-06-27",
+     "close": 1080.95,
+     "ma": 988.6754,
+     "invested": true
+    },
+    {
+     "date": "2025-07-04",
+     "close": 1094.32,
+     "ma": 991.7674,
+     "invested": true
+    },
+    {
+     "date": "2025-07-11",
+     "close": 1090.83,
+     "ma": 994.9554,
+     "invested": true
+    },
+    {
+     "date": "2025-07-18",
+     "close": 1097.22,
+     "ma": 998.6282,
+     "invested": true
+    },
+    {
+     "date": "2025-07-25",
+     "close": 1113.22,
+     "ma": 1002.6186,
+     "invested": true
+    },
+    {
+     "date": "2025-08-01",
+     "close": 1085.59,
+     "ma": 1005.352,
+     "invested": true
+    },
+    {
+     "date": "2025-08-08",
+     "close": 1113.06,
+     "ma": 1008.3072,
+     "invested": true
+    },
+    {
+     "date": "2025-08-15",
+     "close": 1127.44,
+     "ma": 1011.48,
+     "invested": true
+    },
+    {
+     "date": "2025-08-22",
+     "close": 1131.93,
+     "ma": 1015.4352,
+     "invested": true
+    },
+    {
+     "date": "2025-08-29",
+     "close": 1127.84,
+     "ma": 1018.767,
+     "invested": true
+    },
+    {
+     "date": "2025-09-05",
+     "close": 1133.05,
+     "ma": 1021.9512,
+     "invested": true
+    },
+    {
+     "date": "2025-09-12",
+     "close": 1152.66,
+     "ma": 1025.1404,
+     "invested": true
+    },
+    {
+     "date": "2025-09-19",
+     "close": 1164.16,
+     "ma": 1028.691,
+     "invested": true
+    },
+    {
+     "date": "2025-09-26",
+     "close": 1158.5,
+     "ma": 1032.0128,
+     "invested": true
+    },
+    {
+     "date": "2025-10-03",
+     "close": 1178.71,
+     "ma": 1035.65,
+     "invested": true
+    },
+    {
+     "date": "2025-10-10",
+     "close": 1154.54,
+     "ma": 1039.071,
+     "invested": true
+    },
+    {
+     "date": "2025-10-17",
+     "close": 1167.99,
+     "ma": 1042.9896,
+     "invested": true
+    },
+    {
+     "date": "2025-10-24",
+     "close": 1188.76,
+     "ma": 1046.6806,
+     "invested": true
+    },
+    {
+     "date": "2025-10-31",
+     "close": 1194.28,
+     "ma": 1050.9498,
+     "invested": true
+    },
+    {
+     "date": "2025-11-07",
+     "close": 1177.33,
+     "ma": 1054.6202,
+     "invested": true
+    },
+    {
+     "date": "2025-11-14",
+     "close": 1183.32,
+     "ma": 1058.2018,
+     "invested": true
+    },
+    {
+     "date": "2025-11-21",
+     "close": 1154.13,
+     "ma": 1060.9316,
+     "invested": true
+    },
+    {
+     "date": "2025-11-28",
+     "close": 1195.09,
+     "ma": 1064.6508,
+     "invested": true
+    },
+    {
+     "date": "2025-12-05",
+     "close": 1201.67,
+     "ma": 1069.0086,
+     "invested": true
+    },
+    {
+     "date": "2025-12-12",
+     "close": 1200.33,
+     "ma": 1073.1568,
+     "invested": true
+    },
+    {
+     "date": "2025-12-19",
+     "close": 1199.87,
+     "ma": 1077.3946,
+     "invested": true
+    },
+    {
+     "date": "2025-12-26",
+     "close": 1217.16,
+     "ma": 1082.2874,
+     "invested": true
+    },
+    {
+     "date": "2026-01-02",
+     "close": 1213.76,
+     "ma": 1086.617,
+     "invested": true
+    },
+    {
+     "date": "2026-01-09",
+     "close": 1231.97,
+     "ma": 1090.8962,
+     "invested": true
+    },
+    {
+     "date": "2026-01-16",
+     "close": 1236.64,
+     "ma": 1095.348,
+     "invested": true
+    },
+    {
+     "date": "2026-01-23",
+     "close": 1236.29,
+     "ma": 1099.7794,
+     "invested": true
+    },
+    {
+     "date": "2026-01-30",
+     "close": 1244.73,
+     "ma": 1104.0356,
+     "invested": true
+    },
+    {
+     "date": "2026-02-06",
+     "close": 1243.27,
+     "ma": 1108.4644,
+     "invested": true
+    },
+    {
+     "date": "2026-02-13",
+     "close": 1244.7,
+     "ma": 1113.1908,
+     "invested": true
+    },
+    {
+     "date": "2026-02-20",
+     "close": 1257.03,
+     "ma": 1118.3736,
+     "invested": true
+    },
+    {
+     "date": "2026-02-27",
+     "close": 1262.68,
+     "ma": 1124.0154,
+     "invested": true
+    },
+    {
+     "date": "2026-03-06",
+     "close": 1216.13,
+     "ma": 1128.5804,
+     "invested": true
+    },
+    {
+     "date": "2026-03-13",
+     "close": 1194.26,
+     "ma": 1132.9668,
+     "invested": true
+    },
+    {
+     "date": "2026-03-20",
+     "close": 1173.3,
+     "ma": 1138.4432,
+     "invested": true
+    },
+    {
+     "date": "2026-03-27",
+     "close": 1156.02,
+     "ma": 1142.9698,
+     "invested": true
+    },
+    {
+     "date": "2026-04-03",
+     "close": 1189.57,
+     "ma": 1148.0802,
+     "invested": true
+    },
+    {
+     "date": "2026-04-10",
+     "close": 1239.07,
+     "ma": 1153.4438,
+     "invested": true
+    },
+    {
+     "date": "2026-04-17",
+     "close": 1286.29,
+     "ma": 1159.1674,
+     "invested": true
+    },
+    {
+     "date": "2026-04-24",
+     "close": 1283.37,
+     "ma": 1164.8706,
+     "invested": true
+    },
+    {
+     "date": "2026-05-01",
+     "close": 1293.51,
+     "ma": 1169.9878,
+     "invested": true
+    },
+    {
+     "date": "2026-05-08",
+     "close": 1325.7,
+     "ma": 1176.0126,
+     "invested": true
+    },
+    {
+     "date": "2026-05-15",
+     "close": 1317.93,
+     "ma": 1181.6072,
+     "invested": true
+    },
+    {
+     "date": "2026-05-22",
+     "close": 1334.37,
+     "ma": 1187.2352,
+     "invested": true
+    },
+    {
+     "date": "2026-05-29",
+     "close": 1357.33,
+     "ma": 1193.3634,
+     "invested": true
+    },
+    {
+     "date": "2026-06-05",
+     "close": 1328.04,
+     "ma": 1198.9982,
+     "invested": true
+    },
+    {
+     "date": "2026-06-12",
+     "close": 1335.99,
+     "ma": 1204.099,
+     "invested": true
+    },
+    {
+     "date": "2026-06-19",
+     "close": 1352.35,
+     "ma": 1209.2596,
+     "invested": true
+    },
+    {
+     "date": "2026-06-26",
+     "close": 1324.44,
+     "ma": 1213.9318,
+     "invested": true
+    },
+    {
+     "date": "2026-07-03",
+     "close": 1350.45,
+     "ma": 1218.9964,
+     "invested": true
+    },
+    {
+     "date": "2026-07-10",
+     "close": 1353.76,
+     "ma": 1223.8072,
+     "invested": true
+    },
+    {
+     "date": "2026-07-17",
+     "close": 1331.78,
+     "ma": 1228.731,
+     "invested": true
+    },
+    {
+     "date": "2026-07-24",
+     "close": 1328.2,
+     "ma": 1233.0338,
+     "invested": true
+    },
+    {
+     "date": "2026-07-31",
+     "close": 1346.99,
+     "ma": 1237.4248,
+     "invested": true
+    },
+    {
+     "date": "2026-08-07",
+     "close": 1385.52,
+     "ma": 1242.4966,
+     "invested": true
+    },
+    {
+     "date": "2026-08-14",
+     "close": 1395.76,
+     "ma": 1247.855,
+     "invested": true
+    },
+    {
+     "date": "2026-08-21",
+     "close": 1384.03,
+     "ma": 1252.8746,
+     "invested": true
+    },
+    {
+     "date": "2026-08-28",
+     "close": 1388.83,
+     "ma": 1257.598,
+     "invested": true
+    },
+    {
+     "date": "2026-09-04",
+     "close": 1390.07,
+     "ma": 1262.1162,
+     "invested": true
+    },
+    {
+     "date": "2026-09-11",
+     "close": 1377.31,
+     "ma": 1266.4924,
+     "invested": true
+    },
+    {
+     "date": "2026-09-18",
+     "close": 1370.92,
+     "ma": 1270.3366,
+     "invested": true
+    }
+   ],
+   "error": null
+  },
+  {
+   "id": "btc",
+   "name": "Bitcoin",
+   "symbol": "BTC-USD",
+   "instrument": "Bitcoin in US-Dollar",
+   "rule": {
+    "confirm_weeks": 1,
+    "band_pct": 3.0,
+    "buy": "Wochenschluss mehr als 3 % über dem 50-Wochen-MA",
+    "sell": "Wochenschluss mehr als 3 % unter dem 50-Wochen-MA"
+   },
+   "status": "out",
+   "last_week": {
+    "date": "2026-09-20",
+    "close": 81142.6094,
+    "ma": 78787.7596,
+    "distance_pct": 2.99
+   },
+   "last_signal": {
+    "id": "btc-2025-11-16-sell",
+    "date": "2025-11-16",
+    "type": "sell",
+    "close": 94177.0781,
+    "ma": 102948.7413,
+    "distance_pct": -8.52
+   },
+   "change_since_signal_pct": -13.84,
+   "trigger": {
+    "type": "buy",
+    "level": 81151.3924,
+    "streak": 0,
+    "needed": 1
+   },
+   "live": {
+    "date": "2026-09-24",
+    "close": 84236.9688,
+    "ma": 78169.1037,
+    "distance_pct": 7.76,
+    "streak": 1,
+    "would_signal": "buy"
+   },
+   "signals": [
+    {
+     "id": "btc-2015-10-25-buy",
+     "date": "2015-10-25",
+     "type": "buy",
+     "close": 283.68,
+     "ma": 263.9791,
+     "distance_pct": 7.46
+    },
+    {
+     "id": "btc-2018-05-27-sell",
+     "date": "2018-05-27",
+     "type": "sell",
+     "close": 7368.2202,
+     "ma": 7672.7796,
+     "distance_pct": -3.97
+    },
+    {
+     "id": "btc-2019-05-05-buy",
+     "date": "2019-05-05",
+     "type": "buy",
+     "close": 5795.7085,
+     "ma": 5461.135,
+     "distance_pct": 6.13
+    },
+    {
+     "id": "btc-2019-12-15-sell",
+     "date": "2019-12-15",
+     "type": "sell",
+     "close": 7152.3018,
+     "ma": 7416.142,
+     "distance_pct": -3.56
+    },
+    {
+     "id": "btc-2020-01-12-buy",
+     "date": "2020-01-12",
+     "type": "buy",
+     "close": 8192.4941,
+     "ma": 7730.6118,
+     "distance_pct": 5.97
+    },
+    {
+     "id": "btc-2020-03-08-sell",
+     "date": "2020-03-08",
+     "type": "sell",
+     "close": 8108.1162,
+     "ma": 8586.7917,
+     "distance_pct": -5.57
+    },
+    {
+     "id": "btc-2020-05-17-buy",
+     "date": "2020-05-17",
+     "type": "buy",
+     "close": 9670.7393,
+     "ma": 8779.7342,
+     "distance_pct": 10.15
+    },
+    {
+     "id": "btc-2022-01-09-sell",
+     "date": "2022-01-09",
+     "type": "sell",
+     "close": 41911.6016,
+     "ma": 48407.5285,
+     "distance_pct": -13.42
+    },
+    {
+     "id": "btc-2023-03-19-buy",
+     "date": "2023-03-19",
+     "type": "buy",
+     "close": 28038.6758,
+     "ma": 23218.5734,
+     "distance_pct": 20.76
+    },
+    {
+     "id": "btc-2025-11-16-sell",
+     "date": "2025-11-16",
+     "type": "sell",
+     "close": 94177.0781,
+     "ma": 102948.7413,
+     "distance_pct": -8.52
+    }
+   ],
+   "chart": [
+    {
+     "date": "2023-10-01",
+     "close": 27983.75,
+     "ma": 24596.0211,
+     "invested": true
+    },
+    {
+     "date": "2023-10-08",
+     "close": 27935.0898,
+     "ma": 24763.3828,
+     "invested": true
+    },
+    {
+     "date": "2023-10-15",
+     "close": 27159.6523,
+     "ma": 24893.8638,
+     "invested": true
+    },
+    {
+     "date": "2023-10-22",
+     "close": 29993.8965,
+     "ma": 25075.212,
+     "invested": true
+    },
+    {
+     "date": "2023-10-29",
+     "close": 34538.4805,
+     "ma": 25438.9143,
+     "invested": true
+    },
+    {
+     "date": "2023-11-05",
+     "close": 35049.3555,
+     "ma": 25814.0647,
+     "invested": true
+    },
+    {
+     "date": "2023-11-12",
+     "close": 37054.5195,
+     "ma": 26226.2626,
+     "invested": true
+    },
+    {
+     "date": "2023-11-19",
+     "close": 37386.5469,
+     "ma": 26631.3838,
+     "invested": true
+    },
+    {
+     "date": "2023-11-26",
+     "close": 37479.1211,
+     "ma": 27038.8823,
+     "invested": true
+    },
+    {
+     "date": "2023-12-03",
+     "close": 39978.3906,
+     "ma": 27503.2906,
+     "invested": true
+    },
+    {
+     "date": "2023-12-10",
+     "close": 43779.6992,
+     "ma": 28042.0449,
+     "invested": true
+    },
+    {
+     "date": "2023-12-17",
+     "close": 41364.6641,
+     "ma": 28536.8366,
+     "invested": true
+    },
+    {
+     "date": "2023-12-24",
+     "close": 43016.1172,
+     "ma": 29055.336,
+     "invested": true
+    },
+    {
+     "date": "2023-12-31",
+     "close": 42265.1875,
+     "ma": 29483.0238,
+     "invested": true
+    },
+    {
+     "date": "2024-01-07",
+     "close": 43943.0977,
+     "ma": 29907.4774,
+     "invested": true
+    },
+    {
+     "date": "2024-01-14",
+     "close": 41796.2695,
+     "ma": 30267.9115,
+     "invested": true
+    },
+    {
+     "date": "2024-01-21",
+     "close": 41545.7852,
+     "ma": 30639.7139,
+     "invested": true
+    },
+    {
+     "date": "2024-01-28",
+     "close": 42035.5938,
+     "ma": 31044.6617,
+     "invested": true
+    },
+    {
+     "date": "2024-02-04",
+     "close": 42583.582,
+     "ma": 31409.7805,
+     "invested": true
+    },
+    {
+     "date": "2024-02-11",
+     "close": 48293.918,
+     "ma": 31904.4346,
+     "invested": true
+    },
+    {
+     "date": "2024-02-18",
+     "close": 52122.5469,
+     "ma": 32498.1752,
+     "invested": true
+    },
+    {
+     "date": "2024-02-25",
+     "close": 51733.2383,
+     "ma": 33089.561,
+     "invested": true
+    },
+    {
+     "date": "2024-03-03",
+     "close": 63167.3711,
+     "ma": 33792.1349,
+     "invested": true
+    },
+    {
+     "date": "2024-03-10",
+     "close": 69019.7891,
+     "ma": 34612.6441,
+     "invested": true
+    },
+    {
+     "date": "2024-03-17",
+     "close": 68390.625,
+     "ma": 35416.4704,
+     "invested": true
+    },
+    {
+     "date": "2024-03-24",
+     "close": 67234.1719,
+     "ma": 36194.4929,
+     "invested": true
+    },
+    {
+     "date": "2024-03-31",
+     "close": 71333.6484,
+     "ma": 37014.8587,
+     "invested": true
+    },
+    {
+     "date": "2024-04-07",
+     "close": 69362.5547,
+     "ma": 37850.2821,
+     "invested": true
+    },
+    {
+     "date": "2024-04-14",
+     "close": 65738.7266,
+     "ma": 38579.6805,
+     "invested": true
+    },
+    {
+     "date": "2024-04-21",
+     "close": 64926.6445,
+     "ma": 39309.1138,
+     "invested": true
+    },
+    {
+     "date": "2024-04-28",
+     "close": 63113.2305,
+     "ma": 40032.7657,
+     "invested": true
+    },
+    {
+     "date": "2024-05-05",
+     "close": 64031.1328,
+     "ma": 40778.3118,
+     "invested": true
+    },
+    {
+     "date": "2024-05-12",
+     "close": 61448.3945,
+     "ma": 41445.5668,
+     "invested": true
+    },
+    {
+     "date": "2024-05-19",
+     "close": 66278.3672,
+     "ma": 42228.7528,
+     "invested": true
+    },
+    {
+     "date": "2024-05-26",
+     "close": 68518.0938,
+     "ma": 43080.3113,
+     "invested": true
+    },
+    {
+     "date": "2024-06-02",
+     "close": 67751.6016,
+     "ma": 43908.6191,
+     "invested": true
+    },
+    {
+     "date": "2024-06-09",
+     "close": 69647.9922,
+     "ma": 44691.9737,
+     "invested": true
+    },
+    {
+     "date": "2024-06-16",
+     "close": 66639.0469,
+     "ma": 45412.3392,
+     "invested": true
+    },
+    {
+     "date": "2024-06-23",
+     "close": 63180.7969,
+     "ma": 46072.5305,
+     "invested": true
+    },
+    {
+     "date": "2024-06-30",
+     "close": 62678.293,
+     "ma": 46721.1137,
+     "invested": true
+    },
+    {
+     "date": "2024-07-07",
+     "close": 55849.1094,
+     "ma": 47236.4051,
+     "invested": true
+    },
+    {
+     "date": "2024-07-14",
+     "close": 60787.793,
+     "ma": 47866.6548,
+     "invested": true
+    },
+    {
+     "date": "2024-07-21",
+     "close": 68154.5234,
+     "ma": 48648.9081,
+     "invested": true
+    },
+    {
+     "date": "2024-07-28",
+     "close": 68255.8672,
+     "ma": 49428.3672,
+     "invested": true
+    },
+    {
+     "date": "2024-08-04",
+     "close": 58116.9766,
+     "ma": 50066.915,
+     "invested": true
+    },
+    {
+     "date": "2024-08-11",
+     "close": 58719.4844,
+     "ma": 50719.5109,
+     "invested": true
+    },
+    {
+     "date": "2024-08-18",
+     "close": 58483.9648,
+     "ma": 51369.7988,
+     "invested": true
+    },
+    {
+     "date": "2024-08-25",
+     "close": 64333.543,
+     "ma": 52139.8252,
+     "invested": true
+    },
+    {
+     "date": "2024-09-01",
+     "close": 57325.4883,
+     "ma": 52755.6512,
+     "invested": true
+    },
+    {
+     "date": "2024-09-08",
+     "close": 54841.5664,
+     "ma": 53327.346,
+     "invested": true
+    },
+    {
+     "date": "2024-09-15",
+     "close": 59182.8359,
+     "ma": 53951.3277,
+     "invested": true
+    },
+    {
+     "date": "2024-09-22",
+     "close": 63648.7109,
+     "ma": 54665.6001,
+     "invested": true
+    },
+    {
+     "date": "2024-09-29",
+     "close": 65635.3047,
+     "ma": 55435.1132,
+     "invested": true
+    },
+    {
+     "date": "2024-10-06",
+     "close": 62818.9531,
+     "ma": 56091.6143,
+     "invested": true
+    },
+    {
+     "date": "2024-10-13",
+     "close": 62851.375,
+     "ma": 56657.8722,
+     "invested": true
+    },
+    {
+     "date": "2024-10-20",
+     "close": 69001.7031,
+     "ma": 57336.9191,
+     "invested": true
+    },
+    {
+     "date": "2024-10-27",
+     "close": 67929.2969,
+     "ma": 57954.4147,
+     "invested": true
+    },
+    {
+     "date": "2024-11-03",
+     "close": 68741.1172,
+     "ma": 58581.5061,
+     "invested": true
+    },
+    {
+     "date": "2024-11-10",
+     "close": 80474.1875,
+     "ma": 59441.4074,
+     "invested": true
+    },
+    {
+     "date": "2024-11-17",
+     "close": 89845.8516,
+     "ma": 60438.7566,
+     "invested": true
+    },
+    {
+     "date": "2024-11-24",
+     "close": 98013.8203,
+     "ma": 61523.4391,
+     "invested": true
+    },
+    {
+     "date": "2024-12-01",
+     "close": 97279.7891,
+     "ma": 62641.7416,
+     "invested": true
+    },
+    {
+     "date": "2024-12-08",
+     "close": 101236.0156,
+     "ma": 63806.1395,
+     "invested": true
+    },
+    {
+     "date": "2024-12-15",
+     "close": 104298.6953,
+     "ma": 65046.8097,
+     "invested": true
+    },
+    {
+     "date": "2024-12-22",
+     "close": 95104.9375,
+     "ma": 66070.0465,
+     "invested": true
+    },
+    {
+     "date": "2024-12-29",
+     "close": 93530.2266,
+     "ma": 67104.7256,
+     "invested": true
+    },
+    {
+     "date": "2025-01-05",
+     "close": 98314.9609,
+     "ma": 68240.1091,
+     "invested": true
+    },
+    {
+     "date": "2025-01-12",
+     "close": 94488.4375,
+     "ma": 69289.166,
+     "invested": true
+    },
+    {
+     "date": "2025-01-19",
+     "close": 101089.6094,
+     "ma": 70459.2866,
+     "invested": true
+    },
+    {
+     "date": "2025-01-26",
+     "close": 102682.5,
+     "ma": 71547.0582,
+     "invested": true
+    },
+    {
+     "date": "2025-02-02",
+     "close": 97688.9766,
+     "ma": 72458.3868,
+     "invested": true
+    },
+    {
+     "date": "2025-02-09",
+     "close": 96500.0938,
+     "ma": 73353.7239,
+     "invested": true
+    },
+    {
+     "date": "2025-02-16",
+     "close": 96175.0312,
+     "ma": 74013.8771,
+     "invested": true
+    },
+    {
+     "date": "2025-02-23",
+     "close": 96273.9219,
+     "ma": 74558.9598,
+     "invested": true
+    },
+    {
+     "date": "2025-03-02",
+     "close": 94248.3516,
+     "ma": 75076.1143,
+     "invested": true
+    },
+    {
+     "date": "2025-03-09",
+     "close": 80601.0391,
+     "ma": 75343.4516,
+     "invested": true
+    },
+    {
+     "date": "2025-03-16",
+     "close": 82579.6875,
+     "ma": 75568.3724,
+     "invested": true
+    },
+    {
+     "date": "2025-03-23",
+     "close": 86054.375,
+     "ma": 75902.2088,
+     "invested": true
+    },
+    {
+     "date": "2025-03-30",
+     "close": 82334.5234,
+     "ma": 76234.1248,
+     "invested": true
+    },
+    {
+     "date": "2025-04-06",
+     "close": 78214.4844,
+     "ma": 76499.8816,
+     "invested": true
+    },
+    {
+     "date": "2025-04-13",
+     "close": 83684.9766,
+     "ma": 76911.3165,
+     "invested": true
+    },
+    {
+     "date": "2025-04-20",
+     "close": 85174.3047,
+     "ma": 77334.1799,
+     "invested": true
+    },
+    {
+     "date": "2025-04-27",
+     "close": 93754.8438,
+     "ma": 77980.3089,
+     "invested": true
+    },
+    {
+     "date": "2025-05-04",
+     "close": 94315.9766,
+     "ma": 78541.0611,
+     "invested": true
+    },
+    {
+     "date": "2025-05-11",
+     "close": 104106.3594,
+     "ma": 79252.8264,
+     "invested": true
+    },
+    {
+     "date": "2025-05-18",
+     "close": 106446.0078,
+     "ma": 80026.7145,
+     "invested": true
+    },
+    {
+     "date": "2025-05-25",
+     "close": 109035.3906,
+     "ma": 80814.4625,
+     "invested": true
+    },
+    {
+     "date": "2025-06-01",
+     "close": 105652.1016,
+     "ma": 81594.7236,
+     "invested": true
+    },
+    {
+     "date": "2025-06-08",
+     "close": 105793.6484,
+     "ma": 82446.9806,
+     "invested": true
+    },
+    {
+     "date": "2025-06-15",
+     "close": 105552.0234,
+     "ma": 83304.4552,
+     "invested": true
+    },
+    {
+     "date": "2025-06-22",
+     "close": 100987.1406,
+     "ma": 84207.2159,
+     "invested": true
+    },
+    {
+     "date": "2025-06-29",
+     "close": 108385.5703,
+     "ma": 85159.1714,
+     "invested": true
+    },
+    {
+     "date": "2025-07-06",
+     "close": 109232.0703,
+     "ma": 85980.7223,
+     "invested": true
+    },
+    {
+     "date": "2025-07-13",
+     "close": 119116.1172,
+     "ma": 86997.9273,
+     "invested": true
+    },
+    {
+     "date": "2025-07-20",
+     "close": 117300.7891,
+     "ma": 88181.6036,
+     "invested": true
+    },
+    {
+     "date": "2025-07-27",
+     "close": 119448.4922,
+     "ma": 89396.1837,
+     "invested": true
+    },
+    {
+     "date": "2025-08-03",
+     "close": 114217.6719,
+     "ma": 90510.8579,
+     "invested": true
+    },
+    {
+     "date": "2025-08-10",
+     "close": 119306.7578,
+     "ma": 91610.3222,
+     "invested": true
+    },
+    {
+     "date": "2025-08-17",
+     "close": 117453.0625,
+     "ma": 92812.8737,
+     "invested": true
+    },
+    {
+     "date": "2025-08-24",
+     "close": 113458.4297,
+     "ma": 93985.2109,
+     "invested": true
+    },
+    {
+     "date": "2025-08-31",
+     "close": 108236.7109,
+     "ma": 94966.2884,
+     "invested": true
+    },
+    {
+     "date": "2025-09-07",
+     "close": 111167.6172,
+     "ma": 95916.6666,
+     "invested": true
+    },
+    {
+     "date": "2025-09-14",
+     "close": 115407.6562,
+     "ma": 96912.1136,
+     "invested": true
+    },
+    {
+     "date": "2025-09-21",
+     "close": 115306.0938,
+     "ma": 97961.8564,
+     "invested": true
+    },
+    {
+     "date": "2025-09-28",
+     "close": 112122.6406,
+     "ma": 98947.2817,
+     "invested": true
+    },
+    {
+     "date": "2025-10-05",
+     "close": 123513.4766,
+     "ma": 100037.5172,
+     "invested": true
+    },
+    {
+     "date": "2025-10-12",
+     "close": 115169.7656,
+     "ma": 100982.3266,
+     "invested": true
+    },
+    {
+     "date": "2025-10-19",
+     "close": 108666.7109,
+     "ma": 101780.8384,
+     "invested": true
+    },
+    {
+     "date": "2025-10-26",
+     "close": 114472.4453,
+     "ma": 102460.8036,
+     "invested": true
+    },
+    {
+     "date": "2025-11-02",
+     "close": 110639.625,
+     "ma": 102876.6791,
+     "invested": true
+    },
+    {
+     "date": "2025-11-09",
+     "close": 104719.6406,
+     "ma": 103010.7955,
+     "invested": true
+    },
+    {
+     "date": "2025-11-16",
+     "close": 94177.0781,
+     "ma": 102948.7413,
+     "invested": false
+    },
+    {
+     "date": "2025-11-23",
+     "close": 86805.0078,
+     "ma": 102660.1211,
+     "invested": false
+    },
+    {
+     "date": "2025-11-30",
+     "close": 90394.3125,
+     "ma": 102382.0334,
+     "invested": false
+    },
+    {
+     "date": "2025-12-07",
+     "close": 90405.6406,
+     "ma": 102288.0475,
+     "invested": false
+    },
+    {
+     "date": "2025-12-14",
+     "close": 88175.1797,
+     "ma": 102180.9466,
+     "invested": false
+    },
+    {
+     "date": "2025-12-21",
+     "close": 88621.75,
+     "ma": 101987.0823,
+     "invested": false
+    },
+    {
+     "date": "2025-12-28",
+     "close": 87835.8359,
+     "ma": 101854.0303,
+     "invested": false
+    },
+    {
+     "date": "2026-01-04",
+     "close": 91413.4922,
+     "ma": 101660.508,
+     "invested": false
+    },
+    {
+     "date": "2026-01-11",
+     "close": 90827.4609,
+     "ma": 101423.4072,
+     "invested": false
+    },
+    {
+     "date": "2026-01-18",
+     "close": 93634.4297,
+     "ma": 101342.3163,
+     "invested": false
+    },
+    {
+     "date": "2026-01-25",
+     "close": 86572.2188,
+     "ma": 101143.7587,
+     "invested": false
+    },
+    {
+     "date": "2026-02-01",
+     "close": 76974.4453,
+     "ma": 100759.747,
+     "invested": false
+    },
+    {
+     "date": "2026-02-08",
+     "close": 70264.7266,
+     "ma": 100239.5631,
+     "invested": false
+    },
+    {
+     "date": "2026-02-15",
+     "close": 68788.1875,
+     "ma": 99730.3598,
+     "invested": false
+    },
+    {
+     "date": "2026-02-22",
+     "close": 67659.3906,
+     "ma": 99471.5269,
+     "invested": false
+    },
+    {
+     "date": "2026-03-01",
+     "close": 65738.1016,
+     "ma": 99134.6952,
+     "invested": false
+    },
+    {
+     "date": "2026-03-08",
+     "close": 65969.7812,
+     "ma": 98733.0033,
+     "invested": false
+    },
+    {
+     "date": "2026-03-15",
+     "close": 72789.9141,
+     "ma": 98542.1111,
+     "invested": false
+    },
+    {
+     "date": "2026-03-22",
+     "close": 67845.2109,
+     "ma": 98334.7256,
+     "invested": false
+    },
+    {
+     "date": "2026-03-29",
+     "close": 65954.9219,
+     "ma": 97980.1245,
+     "invested": false
+    },
+    {
+     "date": "2026-04-05",
+     "close": 68981.8984,
+     "ma": 97656.2764,
+     "invested": false
+    },
+    {
+     "date": "2026-04-12",
+     "close": 70753.4062,
+     "ma": 97196.2477,
+     "invested": false
+    },
+    {
+     "date": "2026-04-19",
+     "close": 73856.3516,
+     "ma": 96787.0552,
+     "invested": false
+    },
+    {
+     "date": "2026-04-26",
+     "close": 78657.5391,
+     "ma": 96278.0788,
+     "invested": false
+    },
+    {
+     "date": "2026-05-03",
+     "close": 78538.2266,
+     "ma": 95719.9231,
+     "invested": false
+    },
+    {
+     "date": "2026-05-10",
+     "close": 82138.9297,
+     "ma": 95181.9939,
+     "invested": false
+    },
+    {
+     "date": "2026-05-17",
+     "close": 77429.3516,
+     "ma": 94617.5389,
+     "invested": false
+    },
+    {
+     "date": "2026-05-24",
+     "close": 76981.125,
+     "ma": 94041.2884,
+     "invested": false
+    },
+    {
+     "date": "2026-05-31",
+     "close": 73579.6875,
+     "ma": 93401.8417,
+     "invested": false
+    },
+    {
+     "date": "2026-06-07",
+     "close": 63239.5195,
+     "ma": 92646.8893,
+     "invested": false
+    },
+    {
+     "date": "2026-06-14",
+     "close": 65710.3984,
+     "ma": 91793.3859,
+     "invested": false
+    },
+    {
+     "date": "2026-06-21",
+     "close": 63237.5391,
+     "ma": 90873.4952,
+     "invested": false
+    },
+    {
+     "date": "2026-06-28",
+     "close": 59532.3398,
+     "ma": 89681.8197,
+     "invested": false
+    },
+    {
+     "date": "2026-07-05",
+     "close": 63547.8828,
+     "ma": 88606.7616,
+     "invested": false
+    },
+    {
+     "date": "2026-07-12",
+     "close": 63758.2188,
+     "ma": 87492.9561,
+     "invested": false
+    },
+    {
+     "date": "2026-07-19",
+     "close": 64690.8047,
+     "ma": 86502.4187,
+     "invested": false
+    },
+    {
+     "date": "2026-07-26",
+     "close": 65340.3008,
+     "ma": 85423.0896,
+     "invested": false
+    },
+    {
+     "date": "2026-08-02",
+     "close": 63482.0,
+     "ma": 84343.6684,
+     "invested": false
+    },
+    {
+     "date": "2026-08-09",
+     "close": 64844.8867,
+     "ma": 83371.3975,
+     "invested": false
+    },
+    {
+     "date": "2026-08-16",
+     "close": 62818.6523,
+     "ma": 82463.0363,
+     "invested": false
+    },
+    {
+     "date": "2026-08-23",
+     "close": 77755.2656,
+     "ma": 81794.7893,
+     "invested": false
+    },
+    {
+     "date": "2026-08-30",
+     "close": 77667.5703,
+     "ma": 81039.9876,
+     "invested": false
+    },
+    {
+     "date": "2026-09-06",
+     "close": 80350.0469,
+     "ma": 80340.8666,
+     "invested": false
+    },
+    {
+     "date": "2026-09-13",
+     "close": 76838.1562,
+     "ma": 79635.177,
+     "invested": false
+    },
+    {
+     "date": "2026-09-20",
+     "close": 81142.6094,
+     "ma": 78787.7596,
+     "invested": false
+    }
+   ],
+   "error": null
+  },
+  {
+   "id": "gold",
+   "name": "Gold",
+   "symbol": "OANDA:XAUUSD",
+   "instrument": "Gold-Spot (XAU) in US-Dollar je Feinunze",
+   "rule": {
+    "confirm_weeks": 4,
+    "band_pct": 0.0,
+    "buy": "4 Wochenschlüsse in Folge über dem 50-Wochen-MA",
+    "sell": "4 Wochenschlüsse in Folge unter dem 50-Wochen-MA"
+   },
+   "status": "out",
+   "last_week": {
+    "date": "2026-09-18",
+    "close": 4378.385,
+    "ma": 4460.9695,
+    "distance_pct": -1.85
+   },
+   "last_signal": {
+    "id": "gold-2026-07-03-sell",
+    "date": "2026-07-03",
+    "type": "sell",
+    "close": 4175.695,
+    "ma": 4293.8225,
+    "distance_pct": -2.75
+   },
+   "change_since_signal_pct": 4.85,
+   "trigger": {
+    "type": "buy",
+    "level": 4460.9695,
+    "streak": 0,
+    "needed": 4
+   },
+   "live": {
+    "date": "2026-09-24",
+    "close": 4289.385,
+    "ma": 4466.4236,
+    "distance_pct": -3.96,
+    "streak": 0,
+    "would_signal": null
+   },
+   "signals": [
+    {
+     "id": "gold-1999-10-22-buy",
+     "date": "1999-10-22",
+     "type": "buy",
+     "close": 301.9,
+     "ma": 278.5498,
+     "distance_pct": 8.38
+    },
+    {
+     "id": "gold-2000-05-19-sell",
+     "date": "2000-05-19",
+     "type": "sell",
+     "close": 274.0,
+     "ma": 279.4274,
+     "distance_pct": -1.94
+    },
+    {
+     "id": "gold-2000-06-23-buy",
+     "date": "2000-06-23",
+     "type": "buy",
+     "close": 282.9,
+     "ma": 281.5984,
+     "distance_pct": 0.46
+    },
+    {
+     "id": "gold-2000-08-04-sell",
+     "date": "2000-08-04",
+     "type": "sell",
+     "close": 273.0,
+     "ma": 284.5304,
+     "distance_pct": -4.05
+    },
+    {
+     "id": "gold-2001-06-29-buy",
+     "date": "2001-06-29",
+     "type": "buy",
+     "close": 270.6,
+     "ma": 268.6794,
+     "distance_pct": 0.71
+    },
+    {
+     "id": "gold-2008-08-29-sell",
+     "date": "2008-08-29",
+     "type": "sell",
+     "close": 831.05,
+     "ma": 870.2172,
+     "distance_pct": -4.5
+    },
+    {
+     "id": "gold-2009-02-13-buy",
+     "date": "2009-02-13",
+     "type": "buy",
+     "close": 941.7,
+     "ma": 868.1158,
+     "distance_pct": 8.48
+    },
+    {
+     "id": "gold-2012-04-27-sell",
+     "date": "2012-04-27",
+     "type": "sell",
+     "close": 1662.988,
+     "ma": 1668.9897,
+     "distance_pct": -0.36
+    },
+    {
+     "id": "gold-2012-09-14-buy",
+     "date": "2012-09-14",
+     "type": "buy",
+     "close": 1770.465,
+     "ma": 1660.0488,
+     "distance_pct": 6.65
+    },
+    {
+     "id": "gold-2013-01-11-sell",
+     "date": "2013-01-11",
+     "type": "sell",
+     "close": 1662.8785,
+     "ma": 1671.8405,
+     "distance_pct": -0.54
+    },
+    {
+     "id": "gold-2014-07-11-buy",
+     "date": "2014-07-11",
+     "type": "buy",
+     "close": 1337.936,
+     "ma": 1300.1618,
+     "distance_pct": 2.91
+    },
+    {
+     "id": "gold-2014-09-12-sell",
+     "date": "2014-09-12",
+     "type": "sell",
+     "close": 1229.414,
+     "ma": 1288.505,
+     "distance_pct": -4.59
+    },
+    {
+     "id": "gold-2016-02-26-buy",
+     "date": "2016-02-26",
+     "type": "buy",
+     "close": 1222.997,
+     "ma": 1145.9004,
+     "distance_pct": 6.73
+    },
+    {
+     "id": "gold-2016-12-02-sell",
+     "date": "2016-12-02",
+     "type": "sell",
+     "close": 1177.287,
+     "ma": 1251.8465,
+     "distance_pct": -5.96
+    },
+    {
+     "id": "gold-2017-08-11-buy",
+     "date": "2017-08-11",
+     "type": "buy",
+     "close": 1289.36,
+     "ma": 1242.3309,
+     "distance_pct": 3.79
+    },
+    {
+     "id": "gold-2018-06-22-sell",
+     "date": "2018-06-22",
+     "type": "sell",
+     "close": 1269.96,
+     "ma": 1301.64,
+     "distance_pct": -2.43
+    },
+    {
+     "id": "gold-2019-01-18-buy",
+     "date": "2019-01-18",
+     "type": "buy",
+     "close": 1281.689,
+     "ma": 1264.2007,
+     "distance_pct": 1.38
+    },
+    {
+     "id": "gold-2021-03-12-sell",
+     "date": "2021-03-12",
+     "type": "sell",
+     "close": 1726.965,
+     "ma": 1828.1014,
+     "distance_pct": -5.53
+    },
+    {
+     "id": "gold-2021-06-04-buy",
+     "date": "2021-06-04",
+     "type": "buy",
+     "close": 1891.395,
+     "ma": 1850.9516,
+     "distance_pct": 2.19
+    },
+    {
+     "id": "gold-2021-07-09-sell",
+     "date": "2021-07-09",
+     "type": "sell",
+     "close": 1808.465,
+     "ma": 1850.21,
+     "distance_pct": -2.26
+    },
+    {
+     "id": "gold-2022-01-07-buy",
+     "date": "2022-01-07",
+     "type": "buy",
+     "close": 1796.58,
+     "ma": 1795.1115,
+     "distance_pct": 0.08
+    },
+    {
+     "id": "gold-2022-07-15-sell",
+     "date": "2022-07-15",
+     "type": "sell",
+     "close": 1707.46,
+     "ma": 1834.0055,
+     "distance_pct": -6.9
+    },
+    {
+     "id": "gold-2023-01-20-buy",
+     "date": "2023-01-20",
+     "type": "buy",
+     "close": 1926.06,
+     "ma": 1809.8461,
+     "distance_pct": 6.42
+    },
+    {
+     "id": "gold-2026-07-03-sell",
+     "date": "2026-07-03",
+     "type": "sell",
+     "close": 4175.695,
+     "ma": 4293.8225,
+     "distance_pct": -2.75
+    }
+   ],
+   "chart": [
+    {
+     "date": "2023-09-29",
+     "close": 1848.82,
+     "ma": 1892.3477,
+     "invested": true
+    },
+    {
+     "date": "2023-10-06",
+     "close": 1832.035,
+     "ma": 1895.836,
+     "invested": true
+    },
+    {
+     "date": "2023-10-13",
+     "close": 1932.365,
+     "ma": 1901.5956,
+     "invested": true
+    },
+    {
+     "date": "2023-10-20",
+     "close": 1980.9,
+     "ma": 1907.5953,
+     "invested": true
+    },
+    {
+     "date": "2023-10-27",
+     "close": 2006.02,
+     "ma": 1912.2898,
+     "invested": true
+    },
+    {
+     "date": "2023-11-03",
+     "close": 1992.59,
+     "ma": 1917.1242,
+     "invested": true
+    },
+    {
+     "date": "2023-11-10",
+     "close": 1938.385,
+     "ma": 1920.8208,
+     "invested": true
+    },
+    {
+     "date": "2023-11-17",
+     "close": 1980.73,
+     "ma": 1924.4804,
+     "invested": true
+    },
+    {
+     "date": "2023-11-24",
+     "close": 2002.495,
+     "ma": 1928.5811,
+     "invested": true
+    },
+    {
+     "date": "2023-12-01",
+     "close": 2071.88,
+     "ma": 1934.1556,
+     "invested": true
+    },
+    {
+     "date": "2023-12-08",
+     "close": 2004.44,
+     "ma": 1938.2759,
+     "invested": true
+    },
+    {
+     "date": "2023-12-15",
+     "close": 2019.54,
+     "ma": 1942.1909,
+     "invested": true
+    },
+    {
+     "date": "2023-12-22",
+     "close": 2053.2,
+     "ma": 1945.9327,
+     "invested": true
+    },
+    {
+     "date": "2023-12-29",
+     "close": 2062.97,
+     "ma": 1948.7858,
+     "invested": true
+    },
+    {
+     "date": "2024-01-05",
+     "close": 2045.625,
+     "ma": 1951.1771,
+     "invested": true
+    },
+    {
+     "date": "2024-01-12",
+     "close": 2049.155,
+     "ma": 1953.6056,
+     "invested": true
+    },
+    {
+     "date": "2024-01-19",
+     "close": 2029.62,
+     "ma": 1956.8841,
+     "invested": true
+    },
+    {
+     "date": "2024-01-26",
+     "close": 2018.59,
+     "ma": 1959.9489,
+     "invested": true
+    },
+    {
+     "date": "2024-02-02",
+     "close": 2039.75,
+     "ma": 1963.8926,
+     "invested": true
+    },
+    {
+     "date": "2024-02-09",
+     "close": 2024.36,
+     "ma": 1968.1601,
+     "invested": true
+    },
+    {
+     "date": "2024-02-16",
+     "close": 2013.23,
+     "ma": 1971.316,
+     "invested": true
+    },
+    {
+     "date": "2024-02-23",
+     "close": 2035.375,
+     "ma": 1974.6828,
+     "invested": true
+    },
+    {
+     "date": "2024-03-01",
+     "close": 2082.73,
+     "ma": 1976.5713,
+     "invested": true
+    },
+    {
+     "date": "2024-03-08",
+     "close": 2179.105,
+     "ma": 1980.5741,
+     "invested": true
+    },
+    {
+     "date": "2024-03-15",
+     "close": 2156.01,
+     "ma": 1984.3081,
+     "invested": true
+    },
+    {
+     "date": "2024-03-22",
+     "close": 2165.31,
+     "ma": 1987.4571,
+     "invested": true
+    },
+    {
+     "date": "2024-03-29",
+     "close": 2233.12,
+     "ma": 1992.034,
+     "invested": true
+    },
+    {
+     "date": "2024-04-05",
+     "close": 2330.16,
+     "ma": 1998.9788,
+     "invested": true
+    },
+    {
+     "date": "2024-04-12",
+     "close": 2344.235,
+     "ma": 2006.0728,
+     "invested": true
+    },
+    {
+     "date": "2024-04-19",
+     "close": 2392.07,
+     "ma": 2013.5784,
+     "invested": true
+    },
+    {
+     "date": "2024-04-26",
+     "close": 2338.05,
+     "ma": 2020.1189,
+     "invested": true
+    },
+    {
+     "date": "2024-05-03",
+     "close": 2301.81,
+     "ma": 2026.5972,
+     "invested": true
+    },
+    {
+     "date": "2024-05-10",
+     "close": 2360.515,
+     "ma": 2034.8689,
+     "invested": true
+    },
+    {
+     "date": "2024-05-17",
+     "close": 2414.715,
+     "ma": 2044.2012,
+     "invested": true
+    },
+    {
+     "date": "2024-05-24",
+     "close": 2334.0,
+     "ma": 2051.6663,
+     "invested": true
+    },
+    {
+     "date": "2024-05-31",
+     "close": 2327.2,
+     "ma": 2059.0592,
+     "invested": true
+    },
+    {
+     "date": "2024-06-07",
+     "close": 2294.015,
+     "ma": 2066.5142,
+     "invested": true
+    },
+    {
+     "date": "2024-06-14",
+     "close": 2332.645,
+     "ma": 2074.7766,
+     "invested": true
+    },
+    {
+     "date": "2024-06-21",
+     "close": 2321.875,
+     "ma": 2082.7028,
+     "invested": true
+    },
+    {
+     "date": "2024-06-28",
+     "close": 2326.72,
+     "ma": 2090.1285,
+     "invested": true
+    },
+    {
+     "date": "2024-07-05",
+     "close": 2391.62,
+     "ma": 2098.7219,
+     "invested": true
+    },
+    {
+     "date": "2024-07-12",
+     "close": 2410.92,
+     "ma": 2107.7535,
+     "invested": true
+    },
+    {
+     "date": "2024-07-19",
+     "close": 2400.82,
+     "ma": 2116.9168,
+     "invested": true
+    },
+    {
+     "date": "2024-07-26",
+     "close": 2387.02,
+     "ma": 2126.3809,
+     "invested": true
+    },
+    {
+     "date": "2024-08-02",
+     "close": 2442.495,
+     "ma": 2137.4399,
+     "invested": true
+    },
+    {
+     "date": "2024-08-09",
+     "close": 2431.265,
+     "ma": 2147.7767,
+     "invested": true
+    },
+    {
+     "date": "2024-08-16",
+     "close": 2508.14,
+     "ma": 2159.1415,
+     "invested": true
+    },
+    {
+     "date": "2024-08-23",
+     "close": 2512.49,
+     "ma": 2171.0096,
+     "invested": true
+    },
+    {
+     "date": "2024-08-30",
+     "close": 2503.4,
+     "ma": 2182.5992,
+     "invested": true
+    },
+    {
+     "date": "2024-09-06",
+     "close": 2497.565,
+     "ma": 2194.0419,
+     "invested": true
+    },
+    {
+     "date": "2024-09-13",
+     "close": 2578.715,
+     "ma": 2208.6398,
+     "invested": true
+    },
+    {
+     "date": "2024-09-20",
+     "close": 2622.235,
+     "ma": 2224.4438,
+     "invested": true
+    },
+    {
+     "date": "2024-09-27",
+     "close": 2658.55,
+     "ma": 2238.9675,
+     "invested": true
+    },
+    {
+     "date": "2024-10-04",
+     "close": 2653.84,
+     "ma": 2252.4263,
+     "invested": true
+    },
+    {
+     "date": "2024-10-11",
+     "close": 2657.18,
+     "ma": 2265.4495,
+     "invested": true
+    },
+    {
+     "date": "2024-10-18",
+     "close": 2721.9,
+     "ma": 2280.0357,
+     "invested": true
+    },
+    {
+     "date": "2024-10-25",
+     "close": 2747.215,
+     "ma": 2296.2123,
+     "invested": true
+    },
+    {
+     "date": "2024-11-01",
+     "close": 2736.45,
+     "ma": 2311.3267,
+     "invested": true
+    },
+    {
+     "date": "2024-11-08",
+     "close": 2684.455,
+     "ma": 2324.9659,
+     "invested": true
+    },
+    {
+     "date": "2024-11-15",
+     "close": 2563.22,
+     "ma": 2334.7927,
+     "invested": true
+    },
+    {
+     "date": "2024-11-22",
+     "close": 2716.335,
+     "ma": 2349.0306,
+     "invested": true
+    },
+    {
+     "date": "2024-11-29",
+     "close": 2650.35,
+     "ma": 2361.6468,
+     "invested": true
+    },
+    {
+     "date": "2024-12-06",
+     "close": 2633.33,
+     "ma": 2373.2494,
+     "invested": true
+    },
+    {
+     "date": "2024-12-13",
+     "close": 2648.68,
+     "ma": 2384.9636,
+     "invested": true
+    },
+    {
+     "date": "2024-12-20",
+     "close": 2623.61,
+     "ma": 2396.5233,
+     "invested": true
+    },
+    {
+     "date": "2024-12-27",
+     "close": 2622.035,
+     "ma": 2407.9809,
+     "invested": true
+    },
+    {
+     "date": "2025-01-03",
+     "close": 2639.725,
+     "ma": 2420.183,
+     "invested": true
+    },
+    {
+     "date": "2025-01-10",
+     "close": 2689.375,
+     "ma": 2433.5987,
+     "invested": true
+    },
+    {
+     "date": "2025-01-17",
+     "close": 2703.15,
+     "ma": 2446.8667,
+     "invested": true
+    },
+    {
+     "date": "2025-01-24",
+     "close": 2770.885,
+     "ma": 2461.7972,
+     "invested": true
+    },
+    {
+     "date": "2025-01-31",
+     "close": 2797.94,
+     "ma": 2477.4914,
+     "invested": true
+    },
+    {
+     "date": "2025-02-07",
+     "close": 2861.25,
+     "ma": 2494.0089,
+     "invested": true
+    },
+    {
+     "date": "2025-02-14",
+     "close": 2882.482,
+     "ma": 2510.0039,
+     "invested": true
+    },
+    {
+     "date": "2025-02-21",
+     "close": 2936.26,
+     "ma": 2525.147,
+     "invested": true
+    },
+    {
+     "date": "2025-02-28",
+     "close": 2858.14,
+     "ma": 2539.1896,
+     "invested": true
+    },
+    {
+     "date": "2025-03-07",
+     "close": 2909.55,
+     "ma": 2554.0744,
+     "invested": true
+    },
+    {
+     "date": "2025-03-14",
+     "close": 2984.91,
+     "ma": 2569.1102,
+     "invested": true
+    },
+    {
+     "date": "2025-03-21",
+     "close": 3023.985,
+     "ma": 2582.9867,
+     "invested": true
+    },
+    {
+     "date": "2025-03-28",
+     "close": 3085.345,
+     "ma": 2597.8089,
+     "invested": true
+    },
+    {
+     "date": "2025-04-04",
+     "close": 3037.885,
+     "ma": 2610.7252,
+     "invested": true
+    },
+    {
+     "date": "2025-04-11",
+     "close": 3237.93,
+     "ma": 2628.7228,
+     "invested": true
+    },
+    {
+     "date": "2025-04-18",
+     "close": 3327.375,
+     "ma": 2649.2341,
+     "invested": true
+    },
+    {
+     "date": "2025-04-25",
+     "close": 3319.345,
+     "ma": 2668.4107,
+     "invested": true
+    },
+    {
+     "date": "2025-05-02",
+     "close": 3240.95,
+     "ma": 2684.9354,
+     "invested": true
+    },
+    {
+     "date": "2025-05-09",
+     "close": 3325.39,
+     "ma": 2704.7632,
+     "invested": true
+    },
+    {
+     "date": "2025-05-16",
+     "close": 3204.45,
+     "ma": 2722.3082,
+     "invested": true
+    },
+    {
+     "date": "2025-05-23",
+     "close": 3358.125,
+     "ma": 2743.5904,
+     "invested": true
+    },
+    {
+     "date": "2025-05-30",
+     "close": 3289.7,
+     "ma": 2762.7315,
+     "invested": true
+    },
+    {
+     "date": "2025-06-06",
+     "close": 3309.98,
+     "ma": 2782.4936,
+     "invested": true
+    },
+    {
+     "date": "2025-06-13",
+     "close": 3432.835,
+     "ma": 2804.6159,
+     "invested": true
+    },
+    {
+     "date": "2025-06-20",
+     "close": 3368.75,
+     "ma": 2824.1585,
+     "invested": true
+    },
+    {
+     "date": "2025-06-27",
+     "close": 3274.175,
+     "ma": 2841.4236,
+     "invested": true
+    },
+    {
+     "date": "2025-07-04",
+     "close": 3336.615,
+     "ma": 2860.1395,
+     "invested": true
+    },
+    {
+     "date": "2025-07-11",
+     "close": 3355.665,
+     "ma": 2879.5124,
+     "invested": true
+    },
+    {
+     "date": "2025-07-18",
+     "close": 3350.095,
+     "ma": 2897.6644,
+     "invested": true
+    },
+    {
+     "date": "2025-07-25",
+     "close": 3337.07,
+     "ma": 2915.7805,
+     "invested": true
+    },
+    {
+     "date": "2025-08-01",
+     "close": 3362.895,
+     "ma": 2932.8756,
+     "invested": true
+    },
+    {
+     "date": "2025-08-08",
+     "close": 3397.765,
+     "ma": 2950.5811,
+     "invested": true
+    },
+    {
+     "date": "2025-08-15",
+     "close": 3335.7,
+     "ma": 2967.2271,
+     "invested": true
+    },
+    {
+     "date": "2025-08-22",
+     "close": 3371.23,
+     "ma": 2984.7004,
+     "invested": true
+    },
+    {
+     "date": "2025-08-29",
+     "close": 3447.435,
+     "ma": 3002.0748,
+     "invested": true
+    },
+    {
+     "date": "2025-09-05",
+     "close": 3586.545,
+     "ma": 3021.361,
+     "invested": true
+    },
+    {
+     "date": "2025-09-12",
+     "close": 3643.085,
+     "ma": 3041.0517,
+     "invested": true
+    },
+    {
+     "date": "2025-09-19",
+     "close": 3684.975,
+     "ma": 3061.6744,
+     "invested": true
+    },
+    {
+     "date": "2025-09-26",
+     "close": 3759.855,
+     "ma": 3083.7279,
+     "invested": true
+    },
+    {
+     "date": "2025-10-03",
+     "close": 3886.455,
+     "ma": 3107.019,
+     "invested": true
+    },
+    {
+     "date": "2025-10-10",
+     "close": 4016.68,
+     "ma": 3132.4083,
+     "invested": true
+    },
+    {
+     "date": "2025-10-17",
+     "close": 4253.975,
+     "ma": 3162.7588,
+     "invested": true
+    },
+    {
+     "date": "2025-10-24",
+     "close": 4114.125,
+     "ma": 3191.3522,
+     "invested": true
+    },
+    {
+     "date": "2025-10-31",
+     "close": 4002.81,
+     "ma": 3220.144,
+     "invested": true
+    },
+    {
+     "date": "2025-11-07",
+     "close": 4001.275,
+     "ma": 3245.8428,
+     "invested": true
+    },
+    {
+     "date": "2025-11-14",
+     "close": 4085.825,
+     "ma": 3274.5523,
+     "invested": true
+    },
+    {
+     "date": "2025-11-21",
+     "close": 4065.01,
+     "ma": 3303.1859,
+     "invested": true
+    },
+    {
+     "date": "2025-11-28",
+     "close": 4215.82,
+     "ma": 3334.5287,
+     "invested": true
+    },
+    {
+     "date": "2025-12-05",
+     "close": 4198.685,
+     "ma": 3366.0302,
+     "invested": true
+    },
+    {
+     "date": "2025-12-12",
+     "close": 4299.38,
+     "ma": 3399.5771,
+     "invested": true
+    },
+    {
+     "date": "2025-12-19",
+     "close": 4338.765,
+     "ma": 3433.5579,
+     "invested": true
+    },
+    {
+     "date": "2025-12-26",
+     "close": 4533.21,
+     "ma": 3470.4346,
+     "invested": true
+    },
+    {
+     "date": "2026-01-02",
+     "close": 4332.065,
+     "ma": 3503.0129,
+     "invested": true
+    },
+    {
+     "date": "2026-01-09",
+     "close": 4509.66,
+     "ma": 3537.7884,
+     "invested": true
+    },
+    {
+     "date": "2026-01-16",
+     "close": 4596.32,
+     "ma": 3573.756,
+     "invested": true
+    },
+    {
+     "date": "2026-01-23",
+     "close": 4987.545,
+     "ma": 3616.2819,
+     "invested": true
+    },
+    {
+     "date": "2026-01-30",
+     "close": 4895.44,
+     "ma": 3656.5411,
+     "invested": true
+    },
+    {
+     "date": "2026-02-06",
+     "close": 4964.62,
+     "ma": 3697.1083,
+     "invested": true
+    },
+    {
+     "date": "2026-02-13",
+     "close": 5042.74,
+     "ma": 3740.8003,
+     "invested": true
+    },
+    {
+     "date": "2026-02-20",
+     "close": 5108.255,
+     "ma": 3784.7744,
+     "invested": true
+    },
+    {
+     "date": "2026-02-27",
+     "close": 5278.51,
+     "ma": 3830.6464,
+     "invested": true
+    },
+    {
+     "date": "2026-03-06",
+     "close": 5171.5,
+     "ma": 3873.5967,
+     "invested": true
+    },
+    {
+     "date": "2026-03-13",
+     "close": 5020.6,
+     "ma": 3912.3018,
+     "invested": true
+    },
+    {
+     "date": "2026-03-20",
+     "close": 4497.48,
+     "ma": 3941.4937,
+     "invested": true
+    },
+    {
+     "date": "2026-03-27",
+     "close": 4493.685,
+     "ma": 3966.6088,
+     "invested": true
+    },
+    {
+     "date": "2026-04-03",
+     "close": 4676.745,
+     "ma": 3993.5962,
+     "invested": true
+    },
+    {
+     "date": "2026-04-10",
+     "close": 4749.685,
+     "ma": 4022.203,
+     "invested": true
+    },
+    {
+     "date": "2026-04-17",
+     "close": 4831.61,
+     "ma": 4054.0162,
+     "invested": true
+    },
+    {
+     "date": "2026-04-24",
+     "close": 4709.75,
+     "ma": 4081.7034,
+     "invested": true
+    },
+    {
+     "date": "2026-05-01",
+     "close": 4613.835,
+     "ma": 4109.8911,
+     "invested": true
+    },
+    {
+     "date": "2026-05-08",
+     "close": 4715.715,
+     "ma": 4137.0429,
+     "invested": true
+    },
+    {
+     "date": "2026-05-15",
+     "close": 4540.645,
+     "ma": 4162.0618,
+     "invested": true
+    },
+    {
+     "date": "2026-05-22",
+     "close": 4509.69,
+     "ma": 4186.056,
+     "invested": true
+    },
+    {
+     "date": "2026-05-29",
+     "close": 4540.53,
+     "ma": 4208.2099,
+     "invested": true
+    },
+    {
+     "date": "2026-06-05",
+     "close": 4327.885,
+     "ma": 4227.3926,
+     "invested": true
+    },
+    {
+     "date": "2026-06-12",
+     "close": 4218.56,
+     "ma": 4246.2803,
+     "invested": true
+    },
+    {
+     "date": "2026-06-19",
+     "close": 4155.405,
+     "ma": 4262.6561,
+     "invested": true
+    },
+    {
+     "date": "2026-06-26",
+     "close": 4088.385,
+     "ma": 4277.3105,
+     "invested": true
+    },
+    {
+     "date": "2026-07-03",
+     "close": 4175.695,
+     "ma": 4293.8225,
+     "invested": false
+    },
+    {
+     "date": "2026-07-10",
+     "close": 4120.67,
+     "ma": 4309.4945,
+     "invested": false
+    },
+    {
+     "date": "2026-07-17",
+     "close": 4017.315,
+     "ma": 4322.5829,
+     "invested": false
+    },
+    {
+     "date": "2026-07-24",
+     "close": 4052.845,
+     "ma": 4335.6845,
+     "invested": false
+    },
+    {
+     "date": "2026-07-31",
+     "close": 4045.165,
+     "ma": 4349.8738,
+     "invested": false
+    },
+    {
+     "date": "2026-08-07",
+     "close": 4341.935,
+     "ma": 4369.2879,
+     "invested": false
+    },
+    {
+     "date": "2026-08-14",
+     "close": 4376.82,
+     "ma": 4387.8756,
+     "invested": false
+    },
+    {
+     "date": "2026-08-21",
+     "close": 4602.99,
+     "ma": 4408.2045,
+     "invested": false
+    },
+    {
+     "date": "2026-08-28",
+     "close": 4454.99,
+     "ma": 4424.4426,
+     "invested": false
+    },
+    {
+     "date": "2026-09-04",
+     "close": 4429.825,
+     "ma": 4439.3396,
+     "invested": false
+    },
+    {
+     "date": "2026-09-11",
+     "close": 4349.42,
+     "ma": 4451.1309,
+     "invested": false
+    },
+    {
+     "date": "2026-09-18",
+     "close": 4378.385,
+     "ma": 4460.9695,
+     "invested": false
+    }
+   ],
+   "error": null
+  }
+ ],
+ "notified": []
+}

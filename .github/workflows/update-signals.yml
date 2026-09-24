@@ -1,0 +1,64 @@
+name: Signale aktualisieren
+
+on:
+  schedule:
+    # Täglich 06:17 UTC: erfasst den Freitagsschluss (FTSE, Gold) am Samstag
+    # und den Bitcoin-Wochenschluss (Sonntag 24:00 UTC) am Montagmorgen.
+    - cron: "17 6 * * *"
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - "scripts/**"
+      - "requirements.txt"
+      - ".github/workflows/update-signals.yml"
+
+permissions:
+  contents: write
+  issues: write
+
+concurrency:
+  group: update-signals
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Abhängigkeiten installieren
+        run: pip install -r requirements.txt
+
+      - name: Tests
+        run: python -m unittest discover -s tests
+
+      - name: Signale berechnen
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NTFY_TOPIC: ${{ secrets.NTFY_TOPIC }}
+          NTFY_TOKEN: ${{ secrets.NTFY_TOKEN }}
+          NTFY_SERVER: ${{ vars.NTFY_SERVER }}
+          SITE_URL: ${{ vars.SITE_URL }}
+          NOTIFY_GITHUB_ISSUES: ${{ vars.NOTIFY_GITHUB_ISSUES }}
+        run: python scripts/update_signals.py
+
+      # Läuft auch, wenn eine Anlage nicht abrufbar war, damit die übrigen
+      # Daten und die Liste verschickter Benachrichtigungen erhalten bleiben.
+      - name: Ergebnis committen
+        if: always()
+        run: |
+          git add docs/data/signals.json
+          if git diff --cached --quiet; then
+            echo "Keine Änderungen."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "Signale aktualisieren"
+          git pull --rebase origin "$GITHUB_REF_NAME"
+          git push origin "HEAD:$GITHUB_REF_NAME"

@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Marktsignale</title>
+  <meta name="description" content="Kauf- und Verkaufssignale für FTSE All-World, Bitcoin und Gold auf Basis des 50-Wochen-Durchschnitts.">
+  <meta name="theme-color" content="#f3f2ee" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#0d0d0d" media="(prefers-color-scheme: dark)">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+  <div class="page">
+    <header class="top">
+      <div>
+        <h1>Marktsignale</h1>
+        <p class="subtitle">50-Wochen-MA-Strategie · Wochenschlusskurse in USD</p>
+      </div>
+      <div class="top-actions">
+        <p class="updated" id="updated" aria-live="polite">Lade Daten …</p>
+        <button type="button" class="notify-btn" id="notify-btn" hidden>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 22a2.5 2.5 0 0 0 2.45-2h-4.9A2.5 2.5 0 0 0 12 22Zm7-6V11a7 7 0 0 0-5.5-6.84V3.5a1.5 1.5 0 0 0-3 0v.66A7 7 0 0 0 5 11v5l-2 2v1h18v-1l-2-2Z"/></svg>
+          <span id="notify-label">Benachrichtigungen</span>
+        </button>
+      </div>
+    </header>
+
+    <section class="summary" id="summary" aria-label="Übersicht"></section>
+
+    <main id="assets" class="assets"></main>
+
+    <section class="history" id="history" hidden>
+      <div class="section-head">
+        <h2>Signalverlauf</h2>
+        <button type="button" class="link-btn" id="history-toggle" hidden></button>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Wochenschluss</th><th>Anlage</th><th>Signal</th><th class="num">Kurs</th><th class="num">Abstand zum MA</th></tr>
+          </thead>
+          <tbody id="history-body"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <p>Datenquellen: TradingView für den FTSE All-World Total Return (FTSE:AW01.TR) und Gold-Spot (OANDA:XAUUSD), Yahoo Finance für Bitcoin (BTC-USD). Alle Kurse in US-Dollar, täglich per GitHub Actions aktualisiert.</p>
+      <p>Keine Anlageberatung. Die Signale folgen ausschließlich den hinterlegten Regeln.</p>
+    </footer>
+  </div>
+
+  <div class="tooltip" id="tooltip" role="status" hidden></div>
+  <script src="assets/app.js" defer></script>
+</body>
+</html>

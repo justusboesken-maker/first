@@ -61,9 +61,8 @@ body {
 }
 
 .page {
-  max-width: 1480px;
   margin: 0 auto;
-  padding: 40px 24px 56px;
+  padding: 36px clamp(16px, 2vw, 40px) 56px;
 }
 
 h1, h2, h3 { margin: 0; font-weight: 650; letter-spacing: -0.01em; }
@@ -198,6 +197,66 @@ a.chip:hover { border-color: var(--axis); }
 .card-bottom .rule { margin-top: 16px; }
 
 .card-top h2 { font-size: 22px; }
+.title-row { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
+
+.icon-btn {
+  display: inline-grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  flex-shrink: 0;
+  padding: 0;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--card);
+  color: var(--text-2);
+  cursor: pointer;
+  transition: color 0.15s, border-color 0.15s, background 0.15s;
+}
+.icon-btn svg { width: 18px; height: 18px; fill: currentColor; }
+.icon-btn:hover { color: var(--text-1); border-color: var(--axis); background: var(--neutral-wash); }
+.icon-btn:focus-visible { outline: 2px solid var(--price); outline-offset: 2px; }
+
+/* Großansicht ------------------------------------------------------------ */
+
+body.no-scroll { overflow: hidden; }
+
+.focus { position: fixed; inset: 0; z-index: 20; }
+.focus-backdrop { position: absolute; inset: 0; background: rgba(0, 0, 0, 0.45); }
+.focus-dialog {
+  position: absolute;
+  inset: clamp(8px, 2vw, 28px);
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+}
+.focus-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 24px 0;
+}
+.focus-card.card {
+  flex: 1;
+  grid-row: auto;
+  grid-template-rows: auto 1fr;
+  grid-template-columns: minmax(300px, 380px) minmax(0, 1fr);
+  column-gap: 36px;
+  border: 0;
+  box-shadow: none;
+  background: transparent;
+}
+.focus-card .card-top { grid-column: 1; grid-row: 1; }
+.focus-card .card-bottom { grid-column: 1; grid-row: 2; }
+.focus-card .chart-col { grid-column: 2; grid-row: 1 / span 2; }
+.focus-card .chart { min-height: 420px; }
+.focus-card .figure-value { font-size: 34px; }
+.focus-card .legend { font-size: 13px; }
 .instrument { margin: 2px 0 0; font-size: 13px; color: var(--muted); }
 
 .status-row {
@@ -323,7 +382,7 @@ a.chip:hover { border-color: var(--axis); }
 
 .tooltip {
   position: fixed;
-  z-index: 10;
+  z-index: 30;
   pointer-events: none;
   min-width: 170px;
   padding: 10px 12px;
@@ -414,6 +473,10 @@ td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
 }
 
 @media (max-width: 900px) {
+  .focus-card.card { grid-template-columns: minmax(0, 1fr); grid-template-rows: auto; }
+  .focus-card .card-top, .focus-card .card-bottom, .focus-card .chart-col { grid-column: 1; grid-row: auto; }
+  .focus-card .chart { min-height: 320px; }
+  .focus-bar { padding: 12px 16px 0; }
   .assets { grid-template-columns: minmax(0, 1fr); }
   .card { grid-row: auto; grid-template-rows: auto; gap: 18px; }
   .chart { min-height: 220px; }

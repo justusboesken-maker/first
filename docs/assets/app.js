@@ -37,6 +37,8 @@ const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&
 const signalName = (type) => (type === 'buy' ? 'Kaufsignal' : 'Verkaufssignal');
 
 const ICON = {
+  expand: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h6v2H7.4l4 4-1.4 1.4-4-4V10H4V4Zm16 0v6h-2V7.4l-4 4-1.4-1.4 4-4H14V4h6ZM4 20v-6h2v2.6l4-4 1.4 1.4-4 4H10v2H4Zm16 0h-6v-2h2.6l-4-4 1.4-1.4 4 4V14h2v6Z"/></svg>',
+  close: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.4 5 12 10.6 17.6 5 19 6.4 13.4 12l5.6 5.6-1.4 1.4-5.6-5.6L6.4 19 5 17.6l5.6-5.6L5 6.4Z"/></svg>',
   up: '<svg viewBox="0 0 10 10" aria-hidden="true"><path d="M5 1.5 9 8.5H1z"/></svg>',
   down: '<svg viewBox="0 0 10 10" aria-hidden="true"><path d="M5 8.5 1 1.5h8z"/></svg>',
   alert: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2 1 21h22L12 2Zm1 15h-2v-2h2v2Zm0-4h-2V9h2v4Z"/></svg>',
@@ -47,6 +49,7 @@ const ICON = {
 let data = null;
 let lastLoad = 0;
 let showAllHistory = false;
+let focusedId = null;
 let range = RANGES.find((r) => r.id === store.get(STORE.range)) || RANGES[2];
 const chartAssets = new Map();
 const resizeObserver = 'ResizeObserver' in window
@@ -139,7 +142,7 @@ function triggerFact(asset) {
     rule.band_pct ? `Wochenschluss ${fmt[0].format(rule.band_pct)} % ${side} MA` : 'Wochenschluss');
 }
 
-function cardHtml(asset) {
+function cardHtml(asset, focus = false) {
   const invested = asset.status === 'invested';
   const week = asset.last_week;
   const signal = asset.last_signal;
@@ -170,10 +173,14 @@ function cardHtml(asset) {
   }
 
   return `
-    <article class="card" id="asset-${esc(asset.id)}">
+    <article class="card${focus ? ' focus-card' : ''}" ${focus ? '' : `id="asset-${esc(asset.id)}"`}>
       <div class="card-top">
         ${callouts.length ? `<div class="callout-stack">${callouts.join('')}</div>` : ''}
-        <h2>${esc(asset.name)}</h2>
+        <div class="title-row">
+          <h2>${esc(asset.name)}</h2>
+          ${focus ? '' : `<button type="button" class="icon-btn" data-expand="${esc(asset.id)}"
+            title="Groß anzeigen" aria-label="${esc(asset.name)} groß anzeigen">${ICON.expand}</button>`}
+        </div>
         <p class="instrument">${esc(asset.symbol)} · ${esc(asset.instrument)}</p>
         <div class="status-row">
           <span class="badge ${asset.status}">${invested ? 'Investiert' : 'Nicht investiert'}</span>
@@ -209,8 +216,52 @@ function cardHtml(asset) {
 }
 
 function renderRange() {
-  $('#range').innerHTML = RANGES.map((r) => `
+  const html = RANGES.map((r) => `
     <button type="button" data-range="${r.id}" aria-pressed="${r.id === range.id}">${r.label}</button>`).join('');
+  document.querySelectorAll('.range').forEach((group) => { group.innerHTML = html; });
+}
+
+function mountChart(el) {
+  chartAssets.set(el, data.assets.find((a) => a.id === el.dataset.asset));
+  drawChart(el);
+  resizeObserver?.observe(el);
+}
+
+/* Großansicht einer Anlage ------------------------------------------------ */
+
+function renderFocus() {
+  const asset = focusedId && data?.assets.find((a) => a.id === focusedId);
+  const dialog = $('#focus-dialog');
+  dialog.querySelectorAll('.chart').forEach((el) => { chartAssets.delete(el); resizeObserver?.unobserve(el); });
+  if (!asset) { closeFocus(); return; }
+  dialog.innerHTML = `
+    <div class="focus-bar">
+      <div class="range" role="group" aria-label="Zeitraum des Charts"></div>
+      <button type="button" class="icon-btn" data-close title="Schließen (Esc)" aria-label="Großansicht schließen">${ICON.close}</button>
+    </div>
+    ${cardHtml(asset, true)}`;
+  dialog.setAttribute('aria-label', `${asset.name} – Großansicht`);
+  renderRange();
+  mountChart(dialog.querySelector('.chart'));
+}
+
+function openFocus(id) {
+  focusedId = id;
+  $('#focus').hidden = false;
+  document.body.classList.add('no-scroll');
+  renderFocus();
+  $('#focus-dialog [data-close]')?.focus();
+}
+
+function closeFocus() {
+  const wasOpen = focusedId !== null;
+  focusedId = null;
+  $('#focus').hidden = true;
+  $('#tooltip').hidden = true;
+  document.body.classList.remove('no-scroll');
+  $('#focus-dialog').querySelectorAll('.chart').forEach((el) => { chartAssets.delete(el); resizeObserver?.unobserve(el); });
+  $('#focus-dialog').innerHTML = '';
+  if (wasOpen) document.querySelector('[data-expand]')?.blur();
 }
 
 function setRange(id) {
@@ -256,12 +307,9 @@ function timeTicks(rows) {
 function renderAssets() {
   resizeObserver?.disconnect();
   chartAssets.clear();
-  $('#assets').innerHTML = data.assets.map(cardHtml).join('');
-  document.querySelectorAll('.chart').forEach((el) => {
-    chartAssets.set(el, data.assets.find((a) => a.id === el.dataset.asset));
-    drawChart(el);
-    resizeObserver?.observe(el);
-  });
+  $('#assets').innerHTML = data.assets.map((a) => cardHtml(a)).join('');
+  $('#assets').querySelectorAll('.chart').forEach(mountChart);
+  if (focusedId) renderFocus();
 }
 
 function renderHistory() {
@@ -482,9 +530,15 @@ function checkForNewSignals() {
 /* Start ------------------------------------------------------------------ */
 
 $('#notify-btn').addEventListener('click', toggleNotifications);
-$('#range').addEventListener('click', (event) => {
-  const button = event.target.closest('button[data-range]');
-  if (button) setRange(button.dataset.range);
+document.addEventListener('click', (event) => {
+  const target = event.target.closest('[data-range], [data-expand], [data-close]');
+  if (!target) return;
+  if (target.dataset.range) setRange(target.dataset.range);
+  else if (target.dataset.expand) openFocus(target.dataset.expand);
+  else closeFocus();
+});
+document.addEventListener('keydown', (event) => {
+  if (event.key === 'Escape' && focusedId) closeFocus();
 });
 renderRange();
 $('#history-toggle').addEventListener('click', () => { showAllHistory = !showAllHistory; renderHistory(); });

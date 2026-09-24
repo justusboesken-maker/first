@@ -8,7 +8,7 @@
   <meta name="theme-color" content="#f3f2ee" media="(prefers-color-scheme: light)">
   <meta name="theme-color" content="#0d0d0d" media="(prefers-color-scheme: dark)">
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="assets/style.css?v=3">
+  <link rel="stylesheet" href="assets/style.css?v=4">
 </head>
 <body>
   <div class="page">
@@ -54,7 +54,12 @@
     </footer>
   </div>
 
+  <div class="focus" id="focus" hidden>
+    <div class="focus-backdrop" data-close></div>
+    <div class="focus-dialog" id="focus-dialog" role="dialog" aria-modal="true"></div>
+  </div>
+
   <div class="tooltip" id="tooltip" role="status" hidden></div>
-  <script src="assets/app.js?v=3" defer></script>
+  <script src="assets/app.js?v=4" defer></script>
 </body>
 </html>

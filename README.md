@@ -24,7 +24,7 @@ GitHub Actions (täglich 06:17 UTC)
 - **Wochenkerzen:** Bei FTSE und Gold zählt der Freitagsschluss. Bei Bitcoin zählt der Schluss am Sonntag um 24:00 UTC. Nur abgeschlossene Wochen erzeugen Signale.
 - **Status:** Das Skript spielt die Regeln über die gesamte Kurshistorie durch. Zu Beginn der Historie gilt der Status „nicht investiert“. Ein Kauf erfolgt nur aus „nicht investiert“ heraus, ein Verkauf nur aus „investiert“.
 - **Laufende Woche:** Die Website zeigt eine vorläufige Einschätzung. Sie warnt, wenn die Woche auf dem aktuellen Niveau ein Signal auslösen würde.
-- **Charts:** Die drei Anlagen stehen auf dem Computer nebeneinander. Der Zeitraum lässt sich umschalten: 1 Monat (Tageskurse mit laufendem 50-Wochen-MA), 1 Jahr, 3 Jahre, 10 Jahre oder Max. (Wochenschlüsse). Reicht die Historie nicht so weit zurück, wird die gesamte verfügbare Historie gezeigt.
+- **Charts:** Die drei Anlagen stehen auf dem Computer nebeneinander. Der Zeitraum lässt sich umschalten: 1 Monat (Tageskurse mit laufendem 50-Wochen-MA), 1 Jahr, 3 Jahre, 10 Jahre oder Max. (Wochenschlüsse). Reicht die Historie nicht so weit zurück, wird die gesamte verfügbare Historie gezeigt. Über das Symbol oben rechts in jeder Karte öffnet sich eine Großansicht mit Chart und allen Infos; auch dort lässt sich der Zeitraum umschalten (schließen mit Esc).
 - **Datenquellen:**
   - `VWRA.L` (Yahoo Finance): Vanguard FTSE All-World UCITS ETF, thesaurierend und in USD notiert. Er bildet den FTSE All-World Total Return ab, mit Kursen ab 2019.
   - `BTC-USD` (Yahoo Finance): Bitcoin in US-Dollar.

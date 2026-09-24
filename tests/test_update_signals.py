@@ -68,23 +68,20 @@ def tv(message):
 
 
 class TradingViewTest(unittest.TestCase):
-    # Wochenkerzen von OANDA:XAUUSD beginnen Sonntag 22:00 UTC
-    week1 = int(datetime(2026, 9, 6, 22, tzinfo=timezone.utc).timestamp())
-    week2 = int(datetime(2026, 9, 13, 22, tzinfo=timezone.utc).timestamp())
+    # Gold-Sitzungen beginnen am Vorabend um 22:00 UTC, Indizes um 00:00 UTC
+    day1 = int(datetime(2026, 9, 13, 22, tzinfo=timezone.utc).timestamp())
+    day2 = int(datetime(2026, 9, 14, 22, tzinfo=timezone.utc).timestamp())
 
     def test_split_frames(self):
         raw = us._tv_frame('{"a":1}') + "~m~4~m~~h~7"
         self.assertEqual(us._tv_split(raw), ['{"a":1}', "~h~7"])
 
-    def test_weeks_dated_on_friday(self):
-        closes = us.tv_weeks_to_closes({self.week1: 3700.0, self.week2: 3650.5}, "exchange", date(2026, 9, 24))
-        self.assertEqual(closes, [(date(2026, 9, 11), 3700.0), (date(2026, 9, 18), 3650.5)])
-        # laufende Woche trägt das heutige Datum
-        closes = us.tv_weeks_to_closes({self.week2: 3650.5}, "exchange", date(2026, 9, 16))
-        self.assertEqual(closes, [(date(2026, 9, 16), 3650.5)])
-        # Montags beginnende Kerzen (Index) landen in derselben Woche
-        monday = int(datetime(2026, 9, 7, tzinfo=timezone.utc).timestamp())
-        self.assertEqual(us.tv_weeks_to_closes({monday: 1.0}, "exchange", date(2026, 9, 24)), [(date(2026, 9, 11), 1.0)])
+    def test_days_dated_on_trading_day(self):
+        midnight = int(datetime(2026, 9, 16, tzinfo=timezone.utc).timestamp())
+        closes = us.tv_days_to_closes({self.day2: 3650.5, self.day1: 3700.0, midnight: 3600.0})
+        self.assertEqual(closes, [
+            (date(2026, 9, 14), 3700.0), (date(2026, 9, 15), 3650.5), (date(2026, 9, 16), 3600.0),
+        ])
 
     def test_fetch_series(self):
         socket = FakeSocket([
@@ -92,22 +89,22 @@ class TradingViewTest(unittest.TestCase):
             tv({"m": "symbol_resolved", "p": ["cs", "sym", {"currency_code": "USD"}]}),
             "~m~4~m~~h~1",
             tv({"m": "timescale_update", "p": ["cs", {"s1": {"s": [
-                {"i": 0, "v": [self.week1, 1, 2, 0.5, 3700.0, 0]},
-                {"i": 1, "v": [self.week2, 1, 2, 0.5, 3650.5, 0]},
+                {"i": 0, "v": [self.day1, 1, 2, 0.5, 3700.0, 0]},
+                {"i": 1, "v": [self.day2, 1, 2, 0.5, 3650.5, 0]},
             ]}}]}) + tv({"m": "series_completed", "p": ["cs", "s1", "ok"]}),
         ])
         fake_module = mock.Mock(create_connection=mock.Mock(return_value=socket))
         with mock.patch.dict(sys.modules, {"websocket": fake_module}):
-            closes = us.fetch_tradingview_weekly("OANDA:XAUUSD", "exchange")
+            closes = us.fetch_tradingview_daily("OANDA:XAUUSD")
         self.assertEqual([c for _, c in closes], [3700.0, 3650.5])
         self.assertIn("~m~4~m~~h~1", socket.sent)  # Heartbeat beantwortet
-        self.assertIn('"1W"', socket.sent[-2])
+        self.assertIn('"1D"', socket.sent[3])
 
     def test_rejects_other_currency(self):
         socket = FakeSocket([tv({"m": "symbol_resolved", "p": ["cs", "sym", {"currency_code": "EUR"}]})])
         fake_module = mock.Mock(create_connection=mock.Mock(return_value=socket))
         with mock.patch.dict(sys.modules, {"websocket": fake_module}), self.assertRaises(ValueError):
-            us.fetch_tradingview_weekly("FTSE:AW01.TR", "exchange")
+            us.fetch_tradingview_daily("OANDA:XAUUSD")
 
 
 class RuleTest(unittest.TestCase):
@@ -190,6 +187,10 @@ class BuildAssetTest(unittest.TestCase):
         self.assertEqual(asset["trigger"], {"type": "buy", "level": 103.0, "streak": 0, "needed": 1})
         self.assertEqual(asset["live"]["would_signal"], "buy")
         self.assertEqual(asset["live"]["ma"], 100.2)
+        # Monatsansicht: Tageskurse mit laufendem MA, letzter Tag = live-Woche
+        self.assertEqual(asset["daily"][-1], {"date": daily[-1][0].isoformat(), "close": 110.0,
+                                              "ma": 100.2, "invested": False})
+        self.assertTrue(all(d["ma"] == 100.0 for d in asset["daily"][:-3]))
 
 
 class NotificationTest(unittest.TestCase):

@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Berechnet Kauf-/Verkaufssignale auf Basis des 50-Wochen-Durchschnitts.
 
-Holt Kurse in USD (FTSE All-World TR und Gold-Spot als Wochenkerzen von
-TradingView, Bitcoin als Tageskurse von Yahoo Finance), bildet Wochenkerzen,
+Holt Tageskurse in USD (FTSE All-World TR und Bitcoin von Yahoo Finance,
+Gold-Spot von TradingView), bildet daraus Wochenkerzen,
 wendet die Regeln aus ASSETS an und schreibt das Ergebnis nach
 docs/data/signals.json. Bei einem neuen Signal wird per ntfy (Push aufs
 Handy) und/oder GitHub-Issue (E-Mail) benachrichtigt.
@@ -15,6 +15,7 @@ Regeln (jeweils Wochenschlusskurs gegen 50-Wochen-SMA):
 from __future__ import annotations
 
 import argparse
+import bisect
 import json
 import os
 import secrets
@@ -30,7 +31,7 @@ ROOT = Path(__file__).resolve().parent.parent
 OUTPUT = ROOT / "docs" / "data" / "signals.json"
 
 MA_WEEKS = 50
-CHART_WEEKS = 156
+DAILY_DAYS = 45  # Tageskurse für die 1-Monats-Ansicht
 NOTIFY_MAX_AGE_DAYS = 14
 
 # calendar "exchange": Woche endet mit dem Freitagsschluss,
@@ -39,9 +40,9 @@ ASSETS = [
     {
         "id": "ftse",
         "name": "FTSE All-World TR",
-        "symbol": "FTSE:AW01.TR",
-        "instrument": "FTSE All-World Index, Total Return in US-Dollar",
-        "source": "tradingview",
+        "symbol": "VWRA.L",
+        "instrument": "Vanguard FTSE All-World UCITS ETF (USD, thesaurierend)",
+        "source": "yahoo",
         "calendar": "exchange",
         "confirm_weeks": 2,
         "band_pct": 0.0,
@@ -149,7 +150,7 @@ def fetch_daily_closes(symbol: str) -> list[tuple[date, float]]:
 
 
 TV_SOCKET = "wss://data.tradingview.com/socket.io/websocket"
-TV_BARS = 1500
+TV_BARS = 5000
 
 
 def _tv_frame(text: str) -> str:
@@ -171,23 +172,19 @@ def _tv_split(raw: str) -> list[str]:
     return messages
 
 
-def tv_weeks_to_closes(bars: dict[int, float], calendar: str, today: date) -> list[tuple[date, float]]:
-    """Datiert TradingView-Wochenkerzen auf ihren letzten Handelstag.
+def tv_days_to_closes(bars: dict[int, float]) -> list[tuple[date, float]]:
+    """Datiert TradingView-Tageskerzen auf ihren Handelstag.
 
-    Die Kerzen beginnen je nach Markt Sonntagabend oder Montag 00:00; 36 h
-    später liegt man sicher im richtigen Montag-Sonntag-Fenster. Die
-    laufende Woche wird auf heute datiert.
+    Gold-Sitzungen beginnen am Vorabend (ca. 22:00 UTC), Indizes um 00:00;
+    12 h nach Sitzungsbeginn liegt man in beiden Fällen im Handelstag.
     """
-    closes: dict[date, float] = {}
-    for ts, close in bars.items():
-        anchor = datetime.fromtimestamp(ts + 36 * 3600, timezone.utc).date()
-        monday = anchor - timedelta(days=anchor.weekday())
-        last_day = monday + timedelta(days=6 if calendar == "crypto" else 4)
-        closes[min(last_day, today)] = float(close)
-    return sorted(closes.items())
+    return sorted(
+        (datetime.fromtimestamp(ts + 12 * 3600, timezone.utc).date(), float(close))
+        for ts, close in bars.items()
+    )
 
 
-def fetch_tradingview_weekly(symbol: str, calendar: str) -> list[tuple[date, float]]:
+def fetch_tradingview_daily(symbol: str) -> list[tuple[date, float]]:
     import websocket  # websocket-client
 
     ws = websocket.create_connection(TV_SOCKET, header=["Origin: https://www.tradingview.com"], timeout=30)
@@ -198,7 +195,7 @@ def fetch_tradingview_weekly(symbol: str, calendar: str) -> list[tuple[date, flo
         ws.send(_tv_message("resolve_symbol", [
             session, "sym", "=" + json.dumps({"symbol": symbol, "adjustment": "splits"}),
         ]))
-        ws.send(_tv_message("create_series", [session, "s1", "s1", "sym", "1W", TV_BARS]))
+        ws.send(_tv_message("create_series", [session, "s1", "s1", "sym", "1D", TV_BARS]))
         bars: dict[int, float] = {}
         deadline = time.time() + 60
         while time.time() < deadline:
@@ -220,7 +217,7 @@ def fetch_tradingview_weekly(symbol: str, calendar: str) -> list[tuple[date, flo
                 if kind == "series_completed":
                     if not bars:
                         raise ValueError(f"Keine Kursdaten für {symbol}")
-                    return tv_weeks_to_closes(bars, calendar, datetime.now(timezone.utc).date())
+                    return tv_days_to_closes(bars)
         raise TimeoutError(f"TradingView hat für {symbol} nicht rechtzeitig geantwortet")
     finally:
         ws.close()
@@ -232,7 +229,7 @@ def fetch_closes(config: dict) -> list[tuple[date, float]]:
     last_error: Exception | None = None
     for attempt in range(3):
         try:
-            return fetch_tradingview_weekly(config["symbol"], config["calendar"])
+            return fetch_tradingview_daily(config["symbol"])
         except Exception as exc:  # noqa: BLE001 - nächster Versuch
             last_error = exc
             time.sleep(5 * (attempt + 1))
@@ -315,6 +312,39 @@ def evaluate(weeks: list[dict], confirm_weeks: int, band_pct: float) -> dict:
     return {"rows": rows, "signals": signals, "invested": invested, "above": above, "below": below}
 
 
+def daily_series(daily: list[tuple[date, float]], weeks: list[dict], rows: list[dict],
+                 calendar: str, since: date) -> list[dict]:
+    """Tageskurse ab `since` mit laufendem 50-Wochen-MA für die Monatsansicht.
+
+    Der MA eines Tages ergibt sich aus den 49 vorherigen Wochenschlüssen und
+    dem Tageskurs, wie im Wochenchart während einer laufenden Woche. Am
+    letzten Handelstag einer Woche entspricht er dem Wochen-MA.
+    """
+    closes = [w["close"] for w in weeks]
+    week_index = {}
+    for i, week in enumerate(weeks):
+        day = date.fromisoformat(week["date"])
+        week_index[day - timedelta(days=day.weekday())] = i
+    row_dates = [r["date"] for r in rows]
+    series = []
+    for day, close in daily:
+        if day < since or (calendar != "crypto" and day.weekday() >= 5):
+            continue
+        k = week_index.get(day - timedelta(days=day.weekday()), len(weeks))
+        previous = closes[max(0, k - (MA_WEEKS - 1)):k]
+        if len(previous) < MA_WEEKS - 1:
+            continue
+        iso = day.isoformat()
+        state = bisect.bisect_right(row_dates, iso) - 1
+        series.append(_rounded({
+            "date": iso,
+            "close": close,
+            "ma": (sum(previous) + close) / MA_WEEKS,
+            "invested": rows[state]["invested"] if state >= 0 else False,
+        }))
+    return series
+
+
 def rule_texts(confirm_weeks: int, band_pct: float) -> dict:
     count = f"{confirm_weeks} Wochenschlüsse in Folge" if confirm_weeks > 1 else "Wochenschluss"
     margin = f"mehr als {band_pct:g} % " if band_pct else ""
@@ -384,9 +414,9 @@ def build_asset(config: dict, daily: list[tuple[date, float]], now: datetime) ->
         "trigger": _rounded(trigger),
         "live": live,
         "signals": signals,
-        "chart": [
-            _rounded(row) for row in result["rows"][-CHART_WEEKS:]
-        ],
+        "chart": [_rounded(row) for row in result["rows"] if row["ma"] is not None],
+        "daily": daily_series(daily, weeks, result["rows"], config["calendar"],
+                              now.date() - timedelta(days=DAILY_DAYS)),
         "error": None,
     }
 
@@ -569,7 +599,7 @@ def main(argv: list[str] | None = None) -> int:
         "notified": sorted(notified, key=lambda i: i.split("-", 1)[1])[-100:],
     }
     args.output.parent.mkdir(parents=True, exist_ok=True)
-    args.output.write_text(json.dumps(output, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
+    args.output.write_text(json.dumps(output, ensure_ascii=False, separators=(",", ":")) + "\n", encoding="utf-8")
     print(f"Geschrieben: {args.output}")
     return 1 if failures else 0
 

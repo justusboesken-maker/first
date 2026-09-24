@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 """Berechnet Kauf-/Verkaufssignale auf Basis des 50-Wochen-Durchschnitts.
 
-Holt Tageskurse (USD) von Yahoo Finance, bildet daraus Wochenkerzen,
+Holt Kurse in USD (FTSE All-World TR und Gold-Spot als Wochenkerzen von
+TradingView, Bitcoin als Tageskurse von Yahoo Finance), bildet Wochenkerzen,
 wendet die Regeln aus ASSETS an und schreibt das Ergebnis nach
 docs/data/signals.json. Bei einem neuen Signal wird per ntfy (Push aufs
 Handy) und/oder GitHub-Issue (E-Mail) benachrichtigt.
@@ -16,6 +17,7 @@ from __future__ import annotations
 import argparse
 import json
 import os
+import secrets
 import sys
 import time
 import urllib.parse
@@ -37,8 +39,9 @@ ASSETS = [
     {
         "id": "ftse",
         "name": "FTSE All-World TR",
-        "symbol": "VWRA.L",
-        "instrument": "Vanguard FTSE All-World UCITS ETF (USD, thesaurierend) als Total-Return-Abbild",
+        "symbol": "FTSE:AW01.TR",
+        "instrument": "FTSE All-World Index, Total Return in US-Dollar",
+        "source": "tradingview",
         "calendar": "exchange",
         "confirm_weeks": 2,
         "band_pct": 0.0,
@@ -48,6 +51,7 @@ ASSETS = [
         "name": "Bitcoin",
         "symbol": "BTC-USD",
         "instrument": "Bitcoin in US-Dollar",
+        "source": "yahoo",
         "calendar": "crypto",
         "confirm_weeks": 1,
         "band_pct": 3.0,
@@ -55,8 +59,9 @@ ASSETS = [
     {
         "id": "gold",
         "name": "Gold",
-        "symbol": "GC=F",
-        "instrument": "COMEX Gold-Future in US-Dollar je Feinunze",
+        "symbol": "OANDA:XAUUSD",
+        "instrument": "Gold-Spot (XAU) in US-Dollar je Feinunze",
+        "source": "tradingview",
         "calendar": "exchange",
         "confirm_weeks": 4,
         "band_pct": 0.0,
@@ -141,6 +146,97 @@ def fetch_daily_closes(symbol: str) -> list[tuple[date, float]]:
                 last_error = exc
         time.sleep(5 * (attempt + 1))
     raise RuntimeError(f"Kursdaten für {symbol} nicht abrufbar: {last_error}")
+
+
+TV_SOCKET = "wss://data.tradingview.com/socket.io/websocket"
+TV_BARS = 1500
+
+
+def _tv_frame(text: str) -> str:
+    return f"~m~{len(text)}~m~{text}"
+
+
+def _tv_message(func: str, params: list) -> str:
+    return _tv_frame(json.dumps({"m": func, "p": params}, separators=(",", ":")))
+
+
+def _tv_split(raw: str) -> list[str]:
+    """Zerlegt ein Websocket-Paket ("~m~<länge>~m~<inhalt>…") in Einzelnachrichten."""
+    messages, pos = [], 0
+    while raw.startswith("~m~", pos):
+        sep = raw.index("~m~", pos + 3)
+        length = int(raw[pos + 3:sep])
+        messages.append(raw[sep + 3:sep + 3 + length])
+        pos = sep + 3 + length
+    return messages
+
+
+def tv_weeks_to_closes(bars: dict[int, float], calendar: str, today: date) -> list[tuple[date, float]]:
+    """Datiert TradingView-Wochenkerzen auf ihren letzten Handelstag.
+
+    Die Kerzen beginnen je nach Markt Sonntagabend oder Montag 00:00; 36 h
+    später liegt man sicher im richtigen Montag-Sonntag-Fenster. Die
+    laufende Woche wird auf heute datiert.
+    """
+    closes: dict[date, float] = {}
+    for ts, close in bars.items():
+        anchor = datetime.fromtimestamp(ts + 36 * 3600, timezone.utc).date()
+        monday = anchor - timedelta(days=anchor.weekday())
+        last_day = monday + timedelta(days=6 if calendar == "crypto" else 4)
+        closes[min(last_day, today)] = float(close)
+    return sorted(closes.items())
+
+
+def fetch_tradingview_weekly(symbol: str, calendar: str) -> list[tuple[date, float]]:
+    import websocket  # websocket-client
+
+    ws = websocket.create_connection(TV_SOCKET, header=["Origin: https://www.tradingview.com"], timeout=30)
+    try:
+        session = "cs_" + secrets.token_hex(6)
+        ws.send(_tv_message("set_auth_token", ["unauthorized_user_token"]))
+        ws.send(_tv_message("chart_create_session", [session, ""]))
+        ws.send(_tv_message("resolve_symbol", [
+            session, "sym", "=" + json.dumps({"symbol": symbol, "adjustment": "splits"}),
+        ]))
+        ws.send(_tv_message("create_series", [session, "s1", "s1", "sym", "1W", TV_BARS]))
+        bars: dict[int, float] = {}
+        deadline = time.time() + 60
+        while time.time() < deadline:
+            for text in _tv_split(ws.recv()):
+                if text.startswith("~h~"):  # Heartbeat zurückschicken
+                    ws.send(_tv_frame(text))
+                    continue
+                message = json.loads(text)
+                kind, params = message.get("m"), message.get("p") or []
+                if kind in ("symbol_error", "series_error", "critical_error", "protocol_error"):
+                    raise ValueError(f"TradingView-Fehler für {symbol}: {params}")
+                if kind == "symbol_resolved" and len(params) > 2:
+                    currency = (params[2] or {}).get("currency_code")
+                    if currency and currency.upper() != "USD":
+                        raise ValueError(f"{symbol} notiert in {currency}, erwartet wird USD")
+                if kind in ("timescale_update", "du") and len(params) > 1 and isinstance(params[1], dict):
+                    for bar in (params[1].get("s1") or {}).get("s", []):
+                        bars[int(bar["v"][0])] = bar["v"][4]
+                if kind == "series_completed":
+                    if not bars:
+                        raise ValueError(f"Keine Kursdaten für {symbol}")
+                    return tv_weeks_to_closes(bars, calendar, datetime.now(timezone.utc).date())
+        raise TimeoutError(f"TradingView hat für {symbol} nicht rechtzeitig geantwortet")
+    finally:
+        ws.close()
+
+
+def fetch_closes(config: dict) -> list[tuple[date, float]]:
+    if config["source"] != "tradingview":
+        return fetch_daily_closes(config["symbol"])
+    last_error: Exception | None = None
+    for attempt in range(3):
+        try:
+            return fetch_tradingview_weekly(config["symbol"], config["calendar"])
+        except Exception as exc:  # noqa: BLE001 - nächster Versuch
+            last_error = exc
+            time.sleep(5 * (attempt + 1))
+    raise RuntimeError(f"Kursdaten für {config['symbol']} nicht abrufbar: {last_error}")
 
 
 # --------------------------------------------------------------------------
@@ -446,7 +542,7 @@ def main(argv: list[str] | None = None) -> int:
     assets, failures = [], []
     for config in ASSETS:
         try:
-            asset = build_asset(config, fetch_daily_closes(config["symbol"]), now)
+            asset = build_asset(config, fetch_closes(config), now)
             print(f"{config['name']}: {asset['status']}, Wochenschluss {asset['last_week']['date']}")
         except Exception as exc:  # noqa: BLE001 - übrige Anlagen trotzdem aktualisieren
             failures.append(config["name"])

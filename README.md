@@ -15,7 +15,7 @@ Alle Kurse sind in US-Dollar.
 ```
 GitHub Actions (täglich 06:17 UTC)
   └─ scripts/update_signals.py
-       ├─ holt Tageskurse von Yahoo Finance und bildet Wochenkerzen
+       ├─ holt Wochenkerzen von TradingView (FTSE, Gold) und Tageskurse von Yahoo (Bitcoin)
        ├─ berechnet den 50-Wochen-MA (einfacher gleitender Durchschnitt) und wendet die Regeln an
        ├─ schreibt docs/data/signals.json  ──►  Website (docs/)
        └─ bei neuem Signal: ntfy-Push und/oder GitHub-Issue (E-Mail)
@@ -24,10 +24,12 @@ GitHub Actions (täglich 06:17 UTC)
 - **Wochenkerzen:** Bei FTSE und Gold zählt der Freitagsschluss. Bei Bitcoin zählt der Schluss am Sonntag um 24:00 UTC. Nur abgeschlossene Wochen erzeugen Signale.
 - **Status:** Das Skript spielt die Regeln über die gesamte Kurshistorie durch. Zu Beginn der Historie gilt der Status „nicht investiert“. Ein Kauf erfolgt nur aus „nicht investiert“ heraus, ein Verkauf nur aus „investiert“.
 - **Laufende Woche:** Die Website zeigt eine vorläufige Einschätzung. Sie warnt, wenn die Woche auf dem aktuellen Niveau ein Signal auslösen würde.
-- **Datenquellen (Yahoo Finance):**
-  - `VWRA.L`: Vanguard FTSE All-World UCITS ETF, thesaurierend und in USD notiert. Er dient als Abbild des FTSE All-World Total Return, weil der Index selbst nicht frei abrufbar ist.
-  - `BTC-USD`: Bitcoin in US-Dollar.
-  - `GC=F`: COMEX-Gold-Future in US-Dollar je Feinunze.
+- **Datenquellen:**
+  - `FTSE:AW01.TR` (TradingView): FTSE All-World Index, Total Return in US-Dollar.
+  - `OANDA:XAUUSD` (TradingView): Gold-Spot in US-Dollar je Feinunze.
+  - `BTC-USD` (Yahoo Finance): Bitcoin in US-Dollar.
+
+  TradingView bietet keine offizielle Schnittstelle. Das Skript liest die Wochenkerzen über denselben Websocket, den auch die TradingView-Charts nutzen, ohne Anmeldung. Ändert TradingView diesen Zugang, schlägt der Workflow fehl, und die Website zeigt den letzten Stand mit einem Hinweis.
 
   Die Symbole und Regeln stehen oben in `scripts/update_signals.py` (`ASSETS`) und lassen sich dort anpassen.
 

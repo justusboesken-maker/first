@@ -46,6 +46,70 @@ class YahooParseTest(unittest.TestCase):
             us.parse_yahoo_chart(self.payload("GBp"), "VWRL.L")
 
 
+class FakeSocket:
+    """Spielt die Antworten des TradingView-Websockets ab."""
+
+    def __init__(self, packets):
+        self.packets = list(packets)
+        self.sent = []
+
+    def send(self, text):
+        self.sent.append(text)
+
+    def recv(self):
+        return self.packets.pop(0)
+
+    def close(self):
+        pass
+
+
+def tv(message):
+    return us._tv_message(message["m"], message["p"])
+
+
+class TradingViewTest(unittest.TestCase):
+    # Wochenkerzen von OANDA:XAUUSD beginnen Sonntag 22:00 UTC
+    week1 = int(datetime(2026, 9, 6, 22, tzinfo=timezone.utc).timestamp())
+    week2 = int(datetime(2026, 9, 13, 22, tzinfo=timezone.utc).timestamp())
+
+    def test_split_frames(self):
+        raw = us._tv_frame('{"a":1}') + "~m~4~m~~h~7"
+        self.assertEqual(us._tv_split(raw), ['{"a":1}', "~h~7"])
+
+    def test_weeks_dated_on_friday(self):
+        closes = us.tv_weeks_to_closes({self.week1: 3700.0, self.week2: 3650.5}, "exchange", date(2026, 9, 24))
+        self.assertEqual(closes, [(date(2026, 9, 11), 3700.0), (date(2026, 9, 18), 3650.5)])
+        # laufende Woche trägt das heutige Datum
+        closes = us.tv_weeks_to_closes({self.week2: 3650.5}, "exchange", date(2026, 9, 16))
+        self.assertEqual(closes, [(date(2026, 9, 16), 3650.5)])
+        # Montags beginnende Kerzen (Index) landen in derselben Woche
+        monday = int(datetime(2026, 9, 7, tzinfo=timezone.utc).timestamp())
+        self.assertEqual(us.tv_weeks_to_closes({monday: 1.0}, "exchange", date(2026, 9, 24)), [(date(2026, 9, 11), 1.0)])
+
+    def test_fetch_series(self):
+        socket = FakeSocket([
+            us._tv_frame('{"session_id":"x"}'),
+            tv({"m": "symbol_resolved", "p": ["cs", "sym", {"currency_code": "USD"}]}),
+            "~m~4~m~~h~1",
+            tv({"m": "timescale_update", "p": ["cs", {"s1": {"s": [
+                {"i": 0, "v": [self.week1, 1, 2, 0.5, 3700.0, 0]},
+                {"i": 1, "v": [self.week2, 1, 2, 0.5, 3650.5, 0]},
+            ]}}]}) + tv({"m": "series_completed", "p": ["cs", "s1", "ok"]}),
+        ])
+        fake_module = mock.Mock(create_connection=mock.Mock(return_value=socket))
+        with mock.patch.dict(sys.modules, {"websocket": fake_module}):
+            closes = us.fetch_tradingview_weekly("OANDA:XAUUSD", "exchange")
+        self.assertEqual([c for _, c in closes], [3700.0, 3650.5])
+        self.assertIn("~m~4~m~~h~1", socket.sent)  # Heartbeat beantwortet
+        self.assertIn('"1W"', socket.sent[-2])
+
+    def test_rejects_other_currency(self):
+        socket = FakeSocket([tv({"m": "symbol_resolved", "p": ["cs", "sym", {"currency_code": "EUR"}]})])
+        fake_module = mock.Mock(create_connection=mock.Mock(return_value=socket))
+        with mock.patch.dict(sys.modules, {"websocket": fake_module}), self.assertRaises(ValueError):
+            us.fetch_tradingview_weekly("FTSE:AW01.TR", "exchange")
+
+
 class RuleTest(unittest.TestCase):
     base = [100.0] * us.MA_WEEKS  # MA genau 100, kein Signal
 
@@ -155,7 +219,7 @@ class MainTest(unittest.TestCase):
     """Gesamtablauf mit gemockten Kursdaten und Benachrichtigungen."""
 
     @staticmethod
-    def fake_prices(symbol):
+    def fake_prices(config):
         today = datetime.now(timezone.utc).date()
         days = [today - timedelta(days=i) for i in range(500, -1, -1)]
         # lange flach, dann ein Sprung in den letzten zehn Tagen: Bitcoin
@@ -165,7 +229,7 @@ class MainTest(unittest.TestCase):
     def run_main(self, output, fetch):
         env = {"NTFY_TOPIC": "test", "NOTIFY_GITHUB_ISSUES": "false"}
         with mock.patch.dict(os.environ, env), \
-                mock.patch.object(us, "fetch_daily_closes", side_effect=fetch), \
+                mock.patch.object(us, "fetch_closes", side_effect=fetch), \
                 mock.patch.object(us, "post_json") as post:
             code = us.main(["--output", str(output)])
         return code, post, json.loads(output.read_text(encoding="utf-8"))
@@ -182,10 +246,10 @@ class MainTest(unittest.TestCase):
             sent = [call.args[1]["title"] for call in post.call_args_list]
             self.assertIn("Kaufsignal: Bitcoin", sent)
 
-            def failing(symbol):
-                if symbol == "GC=F":
+            def failing(config):
+                if config["id"] == "gold":
                     raise RuntimeError("nicht erreichbar")
-                return self.fake_prices(symbol)
+                return self.fake_prices(config)
 
             code, post, again = self.run_main(output, failing)
             self.assertEqual(code, 1)
